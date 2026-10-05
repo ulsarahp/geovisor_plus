@@ -1,0 +1,13 @@
+/* ================================================================
+    POPUPS
+  ================================================================ */
+.custom-popup .leaflet-popup-content-wrapper { border-radius:var(--r-md) !important; padding:0 !important; overflow:hidden !important; box-shadow:var(--shadow-xl) !important; border:1px solid var(--border-medium) !important; background:var(--bg-surface) !important; }
+  .custom-popup .leaflet-popup-content { margin:0 !important; min-width:195px; max-width:290px; }
+  .custom-popup .leaflet-popup-tip { background:var(--bg-surface) !important; }
+  .popup-header { padding:0.55rem 0.8rem; color:#fff; font-weight:700; font-size:0.78rem; display:flex; flex-direction:column; gap:0.12rem; }
+  .popup-header .capa-nombre { font-size:0.56rem; font-weight:400; opacity:0.7; }
+  .popup-body { padding:0.45rem 0.8rem 0.65rem; background:var(--bg-surface); font-size:0.7rem; }
+  .popup-body .attr { display:flex; align-items:flex-start; gap:0.45rem; padding:0.18rem 0; border-bottom:1px solid var(--border-subtle); }
+  .popup-body .attr:last-child { border-bottom:none; }
+  .popup-body .attr .key { flex:0 0 42%; font-weight:600; color:var(--text-muted); font-size:0.63rem; }
+  .popup-body .attr .value { flex:1; color:var(--text-primary); text-align:right; font-size:0.65rem; word-break:break-word; }

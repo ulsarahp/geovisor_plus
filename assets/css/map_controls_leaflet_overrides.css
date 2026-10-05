@@ -1,0 +1,51 @@
+/* ================================================================
+    MAP CONTROLS (Leaflet overrides)
+  ================================================================ */
+.leaflet-control-zoom,
+  .leaflet-control-layers,
+  .home-control-wrap,
+  .panel-toggle-wrap,
+  .leaflet-control-browser-print,
+  .leaflet-draw-toolbar {
+   background: var(--panel-glass) !important;
+   backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important;
+   border: 1px solid var(--border-medium) !important;
+   border-radius: var(--r-md) !important; box-shadow: var(--shadow-md) !important;
+   overflow: hidden; margin-bottom: 8px !important;
+  }
+  .leaflet-control-zoom a, .home-control, .panel-toggle-control, .leaflet-control-browser-print a, .leaflet-draw-toolbar a {
+   display: flex !important; align-items: center; justify-content: center;
+   width: 36px !important; height: 36px !important;
+   background: transparent !important; border: none !important;
+   border-bottom: 1px solid var(--border-subtle) !important;
+   color: var(--text-secondary) !important;
+   font-size: 0.88rem !important; line-height: 36px !important;
+   text-decoration: none !important; cursor: pointer;
+   transition: all var(--t-fast) var(--ease) !important;
+  }
+  .leaflet-control-zoom a:last-child, .home-control, .panel-toggle-control { border-bottom: none !important; }
+  .leaflet-control-zoom a:hover, .home-control:hover, .panel-toggle-control:hover, .leaflet-control-browser-print a:hover, .leaflet-draw-toolbar a:hover { background: var(--bg-glass-hover) !important; color: var(--text-primary) !important; }
+  .leaflet-control-zoom a:active, .home-control:active { background: rgba(255,255,255,0.1) !important; }
+
+  .leaflet-control-layers-expanded {
+   background: var(--panel-glass-plus) !important; border: 1px solid var(--border-medium) !important;
+   border-radius: var(--r-md) !important; box-shadow: var(--shadow-lg) !important;
+   color: var(--text-primary) !important; padding: 0.7rem !important; min-width: 175px !important;
+  }
+  .leaflet-control-layers-expanded label { font-family:'Inter',sans-serif !important; font-size:0.73rem !important; color:var(--text-secondary) !important; display:flex; align-items:center; gap:6px; padding:0.28rem 0; cursor:pointer; transition:color var(--t-fast) var(--ease); }
+  .leaflet-control-layers-expanded label:hover { color: var(--text-primary) !important; }
+  .leaflet-control-layers-separator { border-color: var(--border-subtle) !important; }
+
+  .leaflet-draw-toolbar a { background-image: none !important; font-family: 'Font Awesome 6 Free' !important; font-weight: 900 !important; }
+  .leaflet-draw-draw-polygon::before { content:"\f5ee" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
+  .leaflet-draw-draw-polyline::before { content:"\f304" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
+  .leaflet-draw-draw-marker::before  { content:"\f3c5" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
+  .leaflet-draw-edit-edit::before   { content:"\f044" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
+  .leaflet-draw-edit-remove::before  { content:"\f2ed" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
+
+  .leaflet-control-scale { font-family:'Inter',sans-serif !important; background:var(--panel-glass) !important; backdrop-filter:blur(8px) !important; border-radius:var(--r-full) !important; padding:3px 11px !important; border:1px solid var(--border-subtle) !important; box-shadow:var(--shadow-sm) !important; font-size:0.63rem !important; color:var(--text-secondary) !important; }
+  .leaflet-control-scale-line { border-color:var(--brand-secondary) !important; background:transparent !important; }
+
+  /* Atribución de teselas adaptada al tema */
+  .leaflet-control-attribution { background:var(--panel-glass) !important; color:var(--text-secondary) !important; font-size:0.58rem !important; }
+  .leaflet-control-attribution a { color:var(--brand-secondary-lt) !important; }

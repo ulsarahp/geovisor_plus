@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco">
+  <gmd:fileIdentifier><gco:CharacterString>CONANP-SIG-DES-shp_00ent-202606</gco:CharacterString></gmd:fileIdentifier>
+  <gmd:language><gco:CharacterString>spa</gco:CharacterString></gmd:language>
+  <gmd:dateStamp><gco:Date>2025-10-21</gco:Date></gmd:dateStamp>
+  <gmd:metadataStandardName><gco:CharacterString>ISO 19115:2003</gco:CharacterString></gmd:metadataStandardName>
+  <gmd:identificationInfo><gmd:MD_DataIdentification>
+    <gmd:citation><gmd:CI_Citation>
+      <gmd:title><gco:CharacterString>Marco Geoestadístico Integrado — Límite Estatal (AGEE)</gco:CharacterString></gmd:title>
+      <gmd:alternateTitle><gco:CharacterString>Estados INEGI 2025 (32 AGEE)</gco:CharacterString></gmd:alternateTitle>
+    </gmd:CI_Citation></gmd:citation>
+    <gmd:abstract><gco:CharacterString>Límite estatal del MGI 2025, INEGI (32 AGEE). Representación para referencia geográfica de censos y encuestas. No es fuente oficial de división político-administrativa. Claves 01 Aguascalientes a 32 Zacatecas.</gco:CharacterString></gmd:abstract>
+    <gmd:purpose><gco:CharacterString>Contexto geográfico de referencia para censos, planeación y control de cobertura.</gco:CharacterString></gmd:purpose>
+    <gmd:extent><gmd:EX_Extent><gmd:geographicElement><gmd:EX_GeographicBoundingBox>
+      <gmd:westBoundLongitude><gco:Decimal>-118.365</gco:Decimal></gmd:westBoundLongitude>
+      <gmd:eastBoundLongitude><gco:Decimal>-86.71</gco:Decimal></gmd:eastBoundLongitude>
+      <gmd:southBoundLatitude><gco:Decimal>14.535</gco:Decimal></gmd:southBoundLatitude>
+      <gmd:northBoundLatitude><gco:Decimal>32.718</gco:Decimal></gmd:northBoundLatitude>
+    </gmd:EX_GeographicBoundingBox></gmd:geographicElement></gmd:EX_Extent></gmd:extent>
+  </gmd:MD_DataIdentification></gmd:identificationInfo>
+  <gmd:distributionInfo><gmd:MD_Distribution><gmd:transferOptions><gmd:MD_DigitalTransferOptions><gmd:onLine><gmd:CI_OnlineResource><gmd:linkage><gmd:URL>https://www.inegi.org.mx/temas/mg/#descargas</gmd:URL></gmd:linkage></gmd:CI_OnlineResource></gmd:onLine></gmd:MD_DigitalTransferOptions></gmd:transferOptions></gmd:MD_Distribution></gmd:distributionInfo>
+</gmd:MD_Metadata>

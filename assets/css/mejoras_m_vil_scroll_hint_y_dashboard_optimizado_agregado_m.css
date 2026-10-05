@@ -1,0 +1,88 @@
+/* ================================================================
+    MEJORAS MÓVIL · SCROLL HINT Y DASHBOARD OPTIMIZADO
+    (agregado módulo 1)
+  ================================================================ */
+@media (max-width:480px) {
+    .dashboard-fusedash {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.45rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 1rem;
+    }
+    .kpi-1, .kpi-2, .kpi-3, .kpi-4, .kpi-5, .kpi-6 {
+      grid-column: span 1 !important;
+      grid-row: auto !important;
+      aspect-ratio: auto !important;
+      min-height: 88px !important;
+      height: auto !important;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding: 0.55rem !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .map-widget {
+      grid-column: span 2 !important;
+      aspect-ratio: 1/1 !important;
+      min-height: 280px !important;
+      height: auto !important;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .chart-donut, .chart-bar-cat, .tabla-widget,
+    .chart-hbar-1, .chart-hbar-2, .chart-periodo,
+    .kpi-leyenda, #dashboard-leyenda-card {
+      grid-column: span 2 !important;
+      grid-row: auto !important;
+      scroll-snap-align: start;
+    }
+    .kpi-value {
+      font-size: clamp(0.85rem, 9cqw, 1.2rem) !important;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .kpi-sub {
+      font-size: clamp(0.45rem, 4.5cqw, 0.55rem) !important;
+      line-height: 1.1;
+    }
+    .dashboard-scroll-hint {
+      position: fixed;
+      bottom: 20px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #6B1132, #8a1a3a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      z-index: 500;
+      animation: bounceHint 2s ease-in-out infinite;
+      box-shadow: 0 4px 12px rgba(107,17,50,0.4);
+      pointer-events: none;
+    }
+    @keyframes bounceHint {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-8px) scale(1.1); opacity: 0.7; }
+    }
+    .dashboard-scroll-hint.hidden { display: none; }
+  }
+
+  @media (min-width:481px) and (max-width:768px) {
+    .dashboard-fusedash { grid-template-columns: repeat(3,1fr); gap:0.6rem; }
+    .kpi-1,.kpi-2,.kpi-3,.kpi-4,.kpi-5,.kpi-6 { grid-column:span 1 !important; min-height:95px !important; }
+    .map-widget { grid-column:span 3 !important; min-height:320px !important; }
+    .chart-donut,.chart-bar-cat,.tabla-widget,.chart-hbar-1,.chart-hbar-2,.chart-periodo,.chart-periodo-advc { grid-column:span 3 !important; }
+  }
+
+  .dashboard-fusedash::-webkit-scrollbar { height:6px; }
+  .dashboard-fusedash::-webkit-scrollbar-track { background:rgba(255,255,255,0.05); border-radius:3px; }
+  .dashboard-fusedash::-webkit-scrollbar-thumb { background:var(--brand-secondary); border-radius:3px; }
+  .dashboard-fusedash::-webkit-scrollbar-thumb:hover { background:var(--brand-secondary-lt); }
+ 
+@keyframes spin{ to{ transform:rotate(360deg); } }

@@ -1,0 +1,126 @@
+{
+  "fileIdentifier": "CONANP-SIG-DES-shp_00ent-202606",
+  "language": "spa",
+  "characterSet": "utf8",
+  "hierarchyLevel": "dataset",
+  "hierarchyLevelName": "Conjunto de datos geoespaciales",
+  "contact": {
+    "name": "Mtro. J. Armando Aguiar Rodríguez",
+    "org": "Instituto Nacional de Estadística y Geografía — INEGI",
+    "organisationName": "Instituto Nacional de Estadística y Geografía — INEGI",
+    "email": "atencion.usuarios@inegi.org.mx",
+    "contactInfo": {
+      "email": "atencion.usuarios@inegi.org.mx",
+      "role": "pointOfContact"
+    },
+    "address": "Av. Héroe de Nacozari Sur 2301, Aguascalientes, 20276"
+  },
+  "dateStamp": "2025-10-21",
+  "metadataStandardName": "ISO 19115:2003 - Geographic Information - Metadata",
+  "metadataStandardVersion": "ISO 19115:2003/Cor.1:2006",
+  "referenceSystemInfo": {
+    "code": "EPSG:4326",
+    "codeSpace": "EPSG",
+    "version": "WGS 84",
+    "datum": "ITRF08 época 2010.0, Cónica Conforme de Lambert (par. 17.5/29.5, m.c. -102)"
+  },
+  "identificationInfo": {
+    "citation": {
+      "title": "Marco Geoestadístico Integrado — Límite Estatal (AGEE)",
+      "alternateTitle": "Estados INEGI 2025 (32 AGEE)",
+      "date": "2025-07-31",
+      "dateType": "publication",
+      "edition": "2026",
+      "identifier": "shp_00ent"
+    },
+    "abstract": "Límite estatal del MGI 2025, INEGI (32 AGEE). Representación para referencia geográfica de censos y encuestas. No es fuente oficial de división político-administrativa. Claves 01 Aguascalientes a 32 Zacatecas.",
+    "purpose": "Contexto geográfico de referencia para censos, planeación y control de cobertura.",
+    "credit": "Instituto Nacional de Estadística y Geografía — INEGI",
+    "status": "completed",
+    "pointOfContact": "Mtro. J. Armando Aguiar Rodríguez",
+    "keywords": [
+      "Límite Estatal",
+      "INEGI",
+      "Marco Geoestadístico",
+      "AGEE",
+      "Referencia"
+    ],
+    "topicCategory": "environment",
+    "spatialRepresentationType": "vector",
+    "language": "spa",
+    "extent": {
+      "description": "República Mexicana",
+      "geographicElement": {
+        "westBoundLongitude": -118.365,
+        "eastBoundLongitude": -86.71,
+        "southBoundLatitude": 14.535,
+        "northBoundLatitude": 32.718
+      },
+      "west": -118.365,
+      "east": -86.71,
+      "south": 14.535,
+      "north": 32.718,
+      "temporalElement": {
+        "begin": "1989-05-23",
+        "end": "2026-06-15"
+      }
+    },
+    "supplementalInformation": "Escala 1:250000.",
+    "scale": "1:250000",
+    "format": "ESRI Shapefile (líneas/polígonos)",
+    "access": "Público vía INEGI — Libre Uso",
+    "use": "Términos Libre Uso INEGI. No usar como límite oficial.",
+    "url": "https://www.inegi.org.mx/temas/mg/#descargas",
+    "download": "https://www.inegi.org.mx/temas/mg/#descargas"
+  },
+  "dataQualityInfo": {
+    "scope": "dataset",
+    "report": {
+      "completeness": "Completo para territorio nacional a fecha publicación.",
+      "positionalAccuracy": "98% vértices submétrica, tolerancia 1 m (sept. 2022). Validado con INEGI, imágenes satélite y GPS.",
+      "attributeAccuracy": "Atributos validados CONANP."
+    },
+    "lineage": {
+      "statement": "Compilación e integración de actualizaciones cartográficas 2024-2025, verificación topológica (tolerancia 1 m) y validación contra catálogo único AGEE/AGEM."
+    }
+  },
+  "spatialRepresentationInfo": {
+    "topologyLevel": "geometryOnly",
+    "geometricObjects": {
+      "type": "Polygon"
+    }
+  },
+  "distributionInfo": {
+    "distributionFormat": "ESRI Shapefile (líneas/polígonos)",
+    "transferOptions": {
+      "onLine": [
+        {
+          "protocol": "WWW:LINK",
+          "name": "SIG CONANP",
+          "url": "https://www.inegi.org.mx/temas/mg/#descargas",
+          "description": "Geoportal"
+        },
+        {
+          "protocol": "WWW:DOWNLOAD",
+          "name": "Descarga SHP",
+          "url": "https://www.inegi.org.mx/temas/mg/#descargas",
+          "description": "Descarga"
+        }
+      ]
+    }
+  },
+  "metadataConstraints": {
+    "useLimitation": "Términos Libre Uso INEGI. No usar como límite oficial.",
+    "accessConstraints": "Público vía INEGI — Libre Uso",
+    "useConstraints": "license"
+  },
+  "maintenanceInfo": {
+    "maintenanceAndUpdateFrequency": "Anualmente"
+  },
+  "bbox": [
+    -118.365,
+    14.535,
+    -86.71,
+    32.718
+  ]
+}

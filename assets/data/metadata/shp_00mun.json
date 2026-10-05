@@ -1,0 +1,125 @@
+{
+  "fileIdentifier": "CONANP-SIG-DES-shp_00mun-202606",
+  "language": "spa",
+  "characterSet": "utf8",
+  "hierarchyLevel": "dataset",
+  "hierarchyLevelName": "Conjunto de datos geoespaciales",
+  "contact": {
+    "name": "Mtro. J. Armando Aguiar Rodríguez",
+    "org": "Instituto Nacional de Estadística y Geografía — INEGI",
+    "organisationName": "Instituto Nacional de Estadística y Geografía — INEGI",
+    "email": "atencion.usuarios@inegi.org.mx",
+    "contactInfo": {
+      "email": "atencion.usuarios@inegi.org.mx",
+      "role": "pointOfContact"
+    },
+    "address": "Av. Héroe de Nacozari Sur 2301, Aguascalientes"
+  },
+  "dateStamp": "2025-10-21",
+  "metadataStandardName": "ISO 19115:2003 - Geographic Information - Metadata",
+  "metadataStandardVersion": "ISO 19115:2003/Cor.1:2006",
+  "referenceSystemInfo": {
+    "code": "EPSG:4326",
+    "codeSpace": "EPSG",
+    "version": "WGS 84",
+    "datum": "ITRF08"
+  },
+  "identificationInfo": {
+    "citation": {
+      "title": "Marco Geoestadístico Integrado — Límite Municipal (AGEM)",
+      "alternateTitle": "Municipios INEGI 2025 (2478 AGEM)",
+      "date": "2025-07-31",
+      "dateType": "publication",
+      "edition": "2026",
+      "identifier": "shp_00mun"
+    },
+    "abstract": "Límite municipal del MGI 2025 (2478 AGEM + demarcaciones CDMX). Claves CVE_ENT/CVE_MUN/CVE_LOC, NOMGEO. Referencia, no oficial político-administrativa.",
+    "purpose": "Contexto municipal de referencia.",
+    "credit": "Instituto Nacional de Estadística y Geografía — INEGI",
+    "status": "completed",
+    "pointOfContact": "Mtro. J. Armando Aguiar Rodríguez",
+    "keywords": [
+      "Límite Municipal",
+      "AGEM",
+      "INEGI",
+      "Municipios"
+    ],
+    "topicCategory": "environment",
+    "spatialRepresentationType": "vector",
+    "language": "spa",
+    "extent": {
+      "description": "República Mexicana",
+      "geographicElement": {
+        "westBoundLongitude": -118.365,
+        "eastBoundLongitude": -86.71,
+        "southBoundLatitude": 14.535,
+        "northBoundLatitude": 32.718
+      },
+      "west": -118.365,
+      "east": -86.71,
+      "south": 14.535,
+      "north": 32.718,
+      "temporalElement": {
+        "begin": "1989-05-23",
+        "end": "2026-06-15"
+      }
+    },
+    "supplementalInformation": "Escala 1:250000.",
+    "scale": "1:250000",
+    "format": "ESRI Shapefile",
+    "access": "Público",
+    "use": "Libre Uso INEGI.",
+    "url": "https://www.inegi.org.mx/temas/mg/#descargas",
+    "download": "https://www.inegi.org.mx/temas/mg/#descargas"
+  },
+  "dataQualityInfo": {
+    "scope": "dataset",
+    "report": {
+      "completeness": "Completo para territorio nacional a fecha publicación.",
+      "positionalAccuracy": "98% vértices submétrica, tolerancia 1 m (sept. 2022). Validado con INEGI, imágenes satélite y GPS.",
+      "attributeAccuracy": "Atributos validados CONANP."
+    },
+    "lineage": {
+      "statement": "Actualización permanente y recorridos de campo, validación SIVEC/SIGMA."
+    }
+  },
+  "spatialRepresentationInfo": {
+    "topologyLevel": "geometryOnly",
+    "geometricObjects": {
+      "type": "Polygon"
+    }
+  },
+  "distributionInfo": {
+    "distributionFormat": "ESRI Shapefile",
+    "transferOptions": {
+      "onLine": [
+        {
+          "protocol": "WWW:LINK",
+          "name": "SIG CONANP",
+          "url": "https://www.inegi.org.mx/temas/mg/#descargas",
+          "description": "Geoportal"
+        },
+        {
+          "protocol": "WWW:DOWNLOAD",
+          "name": "Descarga SHP",
+          "url": "https://www.inegi.org.mx/temas/mg/#descargas",
+          "description": "Descarga"
+        }
+      ]
+    }
+  },
+  "metadataConstraints": {
+    "useLimitation": "Libre Uso INEGI.",
+    "accessConstraints": "Público",
+    "useConstraints": "license"
+  },
+  "maintenanceInfo": {
+    "maintenanceAndUpdateFrequency": "Anualmente"
+  },
+  "bbox": [
+    -118.365,
+    14.535,
+    -86.71,
+    32.718
+  ]
+}

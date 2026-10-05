@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco">
+  <gmd:fileIdentifier><gco:CharacterString>CONANP-SIG-DES-shp_advc-202606</gco:CharacterString></gmd:fileIdentifier>
+  <gmd:language><gco:CharacterString>spa</gco:CharacterString></gmd:language>
+  <gmd:dateStamp><gco:Date>2026-06-15</gco:Date></gmd:dateStamp>
+  <gmd:metadataStandardName><gco:CharacterString>ISO 19115:2003</gco:CharacterString></gmd:metadataStandardName>
+  <gmd:identificationInfo><gmd:MD_DataIdentification>
+    <gmd:citation><gmd:CI_Citation>
+      <gmd:title><gco:CharacterString>Áreas Destinadas Voluntariamente a la Conservación Vigentes</gco:CharacterString></gmd:title>
+      <gmd:alternateTitle><gco:CharacterString>ADVC Vigentes — CONANP Junio 2026 (623)</gco:CharacterString></gmd:alternateTitle>
+    </gmd:CI_Citation></gmd:citation>
+    <gmd:abstract><gco:CharacterString>623 ADVC certificadas vigentes a junio 2026. Conservación voluntaria de ejidos, comunidades, privados y gobiernos. Atributos: superficie certificada, tipo propiedad (Social/Privada/Pública), superficie sin traslape con ANP. Escala 1:50000–1:250000.</gco:CharacterString></gmd:abstract>
+    <gmd:purpose><gco:CharacterString>Difundir esfuerzo voluntario y evaluar conectividad y superficie bajo conservación voluntaria.</gco:CharacterString></gmd:purpose>
+    <gmd:extent><gmd:EX_Extent><gmd:geographicElement><gmd:EX_GeographicBoundingBox>
+      <gmd:westBoundLongitude><gco:Decimal>-118.5</gco:Decimal></gmd:westBoundLongitude>
+      <gmd:eastBoundLongitude><gco:Decimal>-86.0</gco:Decimal></gmd:eastBoundLongitude>
+      <gmd:southBoundLatitude><gco:Decimal>14.3</gco:Decimal></gmd:southBoundLatitude>
+      <gmd:northBoundLatitude><gco:Decimal>32.5</gco:Decimal></gmd:northBoundLatitude>
+    </gmd:EX_GeographicBoundingBox></gmd:geographicElement></gmd:EX_Extent></gmd:extent>
+  </gmd:MD_DataIdentification></gmd:identificationInfo>
+  <gmd:distributionInfo><gmd:MD_Distribution><gmd:transferOptions><gmd:MD_DigitalTransferOptions><gmd:onLine><gmd:CI_OnlineResource><gmd:linkage><gmd:URL>https://sig.conanp.gob.mx/container/descargas/files/shape/623_ADVC_VIGENTES_JUNIO_2026.zip</gmd:URL></gmd:linkage></gmd:CI_OnlineResource></gmd:onLine></gmd:MD_DigitalTransferOptions></gmd:transferOptions></gmd:MD_Distribution></gmd:distributionInfo>
+</gmd:MD_Metadata>

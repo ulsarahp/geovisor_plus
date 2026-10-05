@@ -1,0 +1,118 @@
+{
+  "fileIdentifier": "CONANP-SIG-DES-shp_ramsar-202606",
+  "language": "spa",
+  "characterSet": "utf8",
+  "hierarchyLevel": "dataset",
+  "hierarchyLevelName": "Conjunto de datos geoespaciales",
+  "contact": {
+    "organisationName": "Comisión Nacional de Áreas Naturales Protegidas",
+    "contactInfo": {
+      "email": "sig@conanp.gob.mx",
+      "role": "pointOfContact"
+    },
+    "address": "Ejército Nacional 223, Anáhuac, Miguel Hidalgo, CDMX"
+  },
+  "dateStamp": "2026-06-15",
+  "metadataStandardName": "ISO 19115:2003 - Geographic Information - Metadata",
+  "metadataStandardVersion": "IS0 19115:2003/Cor.1:2006",
+  "referenceSystemInfo": {
+    "code": "EPSG:4326",
+    "codeSpace": "EPSG",
+    "version": "WGS 84"
+  },
+  "identificationInfo": {
+    "citation": {
+      "title": "Sitios Ramsar de México",
+      "alternateTitle": "Humedales Ramsar - CONANP 2024",
+      "date": "2026-06-15",
+      "dateType": "publication",
+      "edition": "2026",
+      "identifier": "shp_ramsar"
+    },
+    "abstract": "Delimitación de humedales de importancia internacional designados bajo la Convención Ramsar en México. Información de referencia proporcionada por CONANP con base en fuentes oficiales Ramsar.",
+    "purpose": "Referencia geoespacial para análisis de humedales prioritarios.",
+    "credit": "CONANP / Convención Ramsar",
+    "status": "completed",
+    "pointOfContact": "sig@conanp.gob.mx",
+    "keywords": [
+      "Ramsar",
+      "Humedales",
+      "Sitios Ramsar",
+      "CONANP",
+      "Referencia"
+    ],
+    "topicCategory": "inlandWaters",
+    "spatialRepresentationType": "vector",
+    "language": "spa",
+    "extent": {
+      "description": "República Mexicana",
+      "geographicElement": {
+        "westBoundLongitude": -118.0,
+        "eastBoundLongitude": -86.5,
+        "southBoundLatitude": 14.5,
+        "northBoundLatitude": 32.0
+      },
+      "temporalElement": {
+        "begin": "2002-01-01",
+        "end": "2026-06-15"
+      }
+    },
+    "supplementalInformation": "Escala 1:250000. Solo CONANP es oficial; el resto es referencia. "
+  },
+  "dataQualityInfo": {
+    "scope": "dataset",
+    "report": {
+      "completeness": "Completo para el territorio nacional a la fecha de publicación.",
+      "positionalAccuracy": "Precisión conforme a escala 1:250000. Validado con cartografía INEGI.",
+      "attributeAccuracy": "Atributos validados por CONANP. Campos clave: nombre, categoría, superficie."
+    },
+    "lineage": {
+      "statement": "Generado por CONANP a partir de decretos, polígonos oficiales y validación SIG-DES. Proyección WGS84."
+    }
+  },
+  "spatialRepresentationInfo": {
+    "topologyLevel": "geometryOnly",
+    "geometricObjects": {
+      "type": "Polygon",
+      "level": "vector"
+    }
+  },
+  "distributionInfo": {
+    "distributionFormat": "ESRI Shapefile",
+    "transferOptions": {
+      "onLine": [
+        {
+          "protocol": "WWW:LINK",
+          "name": "SIG CONANP",
+          "url": "https://sig.conanp.gob.mx/",
+          "description": "Geoportal SIG"
+        },
+        {
+          "protocol": "WWW:DOWNLOAD",
+          "name": "Shapefile",
+          "url": "https://sig.conanp.gob.mx/container/descargas/files/shape/shp_ramsar.zip",
+          "description": "Descarga SHP"
+        },
+        {
+          "protocol": "WWW:DOWNLOAD",
+          "name": "KML",
+          "url": "https://sig.conanp.gob.mx/container/data/kml/anp/shp_ramsar.kml",
+          "description": "Descarga KML"
+        }
+      ]
+    }
+  },
+  "metadataConstraints": {
+    "useLimitation": "Uso de referencia, citar fuente original Ramsar/CONANP.",
+    "accessConstraints": "Público",
+    "useConstraints": "license"
+  },
+  "maintenanceInfo": {
+    "maintenanceAndUpdateFrequency": "asNeeded",
+    "updateScope": "dataset"
+  },
+  "graphicOverview": {
+    "fileName": "https://sig.conanp.gob.mx/container/data/shp/anp/shp_ramsar.zip",
+    "fileDescription": "Vista previa del shapefile"
+  }
+}

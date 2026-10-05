@@ -1,0 +1,40 @@
+/* ================================================================
+    BUTTONS
+  ================================================================ */
+.btn-download, .btn-copy, .btn-toggle {
+   background: var(--brand-secondary); color: #fff; border: none;
+   border-radius: var(--r-full); padding: 0.22rem 0.75rem;
+   font-size: 0.6rem; font-weight: 600; cursor: pointer;
+   display: inline-flex; align-items: center; gap: 0.28rem;
+   transition: all var(--t-base) var(--ease-spring);
+   font-family: 'Inter', sans-serif; white-space: nowrap;
+   box-shadow: 0 2px 8px rgba(26,92,78,0.28);
+  }
+  .btn-download:hover { background: var(--brand-secondary-lt); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,92,78,0.38); }
+  .btn-download:active, .btn-copy:active { transform: scale(0.96); }
+
+  .btn-copy { background: var(--bg-glass); box-shadow: none; border: 1px solid var(--border-medium); }
+  .btn-copy:hover { background: var(--bg-glass-hover); box-shadow: none; transform: none; }
+  .btn-copy.copied { background: var(--ok-bg); border-color: var(--ok-bd); color: var(--ok); }
+
+  .btn-toggle { background:var(--bg-glass); border:1px solid var(--border-subtle); box-shadow:none; padding:0.22rem 0.45rem; font-size:0.6rem; color:var(--text-muted); }
+  .btn-toggle:hover { background:var(--bg-glass-hover); color:var(--text-primary); border-color:var(--border-medium); box-shadow:none; transform:none; }
+  .btn-toggle.active { background: var(--brand-secondary); border-color: var(--brand-secondary); color:#fff; }
+  .btn-toggle .toggle-slider { display:inline-block; width:18px; height:10px; background:rgba(255,255,255,0.18); border-radius:var(--r-full); position:relative; transition:background var(--t-base) var(--ease); margin:0 1px; }
+  .btn-toggle .toggle-slider::after { content:''; position:absolute; width:6px; height:6px; background:#fff; border-radius:50%; top:2px; left:2px; transition:left var(--t-base) var(--ease); }
+  .btn-toggle.active .toggle-slider { background: rgba(255,255,255,0.3); }
+  .btn-toggle.active .toggle-slider::after { left: 10px; }
+
+  .dropdown-download { position:relative; display:inline-block; }
+  .dropdown-download .btn-download {
+   background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-sm);
+   padding:0.22rem 0.45rem; font-size:0.6rem; cursor:pointer;
+   display:inline-flex; align-items:center; gap:0.25rem;
+   color:var(--text-muted); min-width:26px; min-height:26px;
+   transition:all var(--t-fast) var(--ease); font-family:'Inter',sans-serif;
+  }
+  .dropdown-download .btn-download:hover { background:var(--bg-glass-hover); color:var(--text-primary); border-color:var(--border-medium); transform:scale(1.05); }
+  .dropdown-download .dropdown-menu { display:none; position:absolute; right:0; top:calc(100% + 4px); background:var(--bg-surface); border:1px solid var(--border-medium); border-radius:var(--r-sm); box-shadow:var(--shadow-lg); min-width:125px; padding:0.28rem 0; z-index:300; }
+  .dropdown-download .dropdown-menu.show { display:block; }
+  .dropdown-download .dropdown-menu button { display:block; width:100%; padding:0.28rem 0.7rem; border:none; background:transparent; text-align:left; font-family:'Inter',sans-serif; font-size:0.63rem; cursor:pointer; color:var(--text-secondary); transition:all var(--t-fast) var(--ease); }
+  .dropdown-download .dropdown-menu button:hover { background:var(--bg-glass-hover); color:var(--text-primary); }

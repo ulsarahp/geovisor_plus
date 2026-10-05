@@ -1,0 +1,123 @@
+{
+  "fileIdentifier": "CONANP-SIG-DES-shp_reg_conanp_mex-202606",
+  "language": "spa",
+  "characterSet": "utf8",
+  "hierarchyLevel": "dataset",
+  "hierarchyLevelName": "Conjunto de datos geoespaciales",
+  "contact": {
+    "name": "CONANP",
+    "org": "Comisión Nacional de Áreas Naturales Protegidas",
+    "organisationName": "Comisión Nacional de Áreas Naturales Protegidas",
+    "email": "sig@conanp.gob.mx",
+    "contactInfo": {
+      "email": "sig@conanp.gob.mx",
+      "role": "pointOfContact"
+    },
+    "address": "Ejército Nacional 223, CDMX"
+  },
+  "dateStamp": "2026-06-15",
+  "metadataStandardName": "ISO 19115:2003 - Geographic Information - Metadata",
+  "metadataStandardVersion": "ISO 19115:2003/Cor.1:2006",
+  "referenceSystemInfo": {
+    "code": "EPSG:4326",
+    "codeSpace": "EPSG",
+    "version": "WGS 84",
+    "datum": "ITRF08"
+  },
+  "identificationInfo": {
+    "citation": {
+      "title": "Regionalización CONANP Nacional",
+      "alternateTitle": "Regiones CONANP Nacional",
+      "date": "2017-05-22",
+      "dateType": "publication",
+      "edition": "2026",
+      "identifier": "shp_reg_conanp_mex"
+    },
+    "abstract": "Versión nacional de regionalización CONANP para referencia.",
+    "purpose": "Referencia administrativa.",
+    "credit": "Comisión Nacional de Áreas Naturales Protegidas",
+    "status": "completed",
+    "pointOfContact": "CONANP",
+    "keywords": [
+      "Regionalización",
+      "CONANP"
+    ],
+    "topicCategory": "environment",
+    "spatialRepresentationType": "vector",
+    "language": "spa",
+    "extent": {
+      "description": "República Mexicana",
+      "geographicElement": {
+        "westBoundLongitude": -118.5,
+        "eastBoundLongitude": -86.0,
+        "southBoundLatitude": 14.5,
+        "northBoundLatitude": 32.7
+      },
+      "west": -118.5,
+      "east": -86.0,
+      "south": 14.5,
+      "north": 32.7,
+      "temporalElement": {
+        "begin": "1989-05-23",
+        "end": "2026-06-15"
+      }
+    },
+    "supplementalInformation": "Escala 1:1000000.",
+    "scale": "1:1000000",
+    "format": "ESRI Shapefile",
+    "access": "Público",
+    "use": "Oficial.",
+    "url": "https://sig.conanp.gob.mx/",
+    "download": "https://sig.conanp.gob.mx/container/descargas/files/shape/Regionalizacion_22052017.zip"
+  },
+  "dataQualityInfo": {
+    "scope": "dataset",
+    "report": {
+      "completeness": "Completo para territorio nacional a fecha publicación.",
+      "positionalAccuracy": "98% vértices submétrica, tolerancia 1 m (sept. 2022). Validado con INEGI, imágenes satélite y GPS.",
+      "attributeAccuracy": "Atributos validados CONANP."
+    },
+    "lineage": {
+      "statement": "Derivado de regionalización oficial."
+    }
+  },
+  "spatialRepresentationInfo": {
+    "topologyLevel": "geometryOnly",
+    "geometricObjects": {
+      "type": "Polygon"
+    }
+  },
+  "distributionInfo": {
+    "distributionFormat": "ESRI Shapefile",
+    "transferOptions": {
+      "onLine": [
+        {
+          "protocol": "WWW:LINK",
+          "name": "SIG CONANP",
+          "url": "https://sig.conanp.gob.mx/",
+          "description": "Geoportal"
+        },
+        {
+          "protocol": "WWW:DOWNLOAD",
+          "name": "Descarga SHP",
+          "url": "https://sig.conanp.gob.mx/container/descargas/files/shape/Regionalizacion_22052017.zip",
+          "description": "Descarga"
+        }
+      ]
+    }
+  },
+  "metadataConstraints": {
+    "useLimitation": "Oficial.",
+    "accessConstraints": "Público",
+    "useConstraints": "license"
+  },
+  "maintenanceInfo": {
+    "maintenanceAndUpdateFrequency": "Según acuerdo"
+  },
+  "bbox": [
+    -118.5,
+    14.5,
+    -86.0,
+    32.7
+  ]
+}

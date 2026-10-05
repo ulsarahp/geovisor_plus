@@ -1,0 +1,12 @@
+/* ================================================================
+    COORDINATES
+  ================================================================ */
+#coords-container {
+   position: absolute; bottom: 16px; left: 185px; z-index: 1000;
+   background: var(--panel-glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+   border: 1px solid var(--border-subtle); border-radius: var(--r-full);
+   padding: 0.28rem 0.75rem; font-size: 0.62rem; color: var(--text-secondary);
+   pointer-events: none; display: none; box-shadow: var(--shadow-sm);
+  }
+  #coords-container .coord-label { color:var(--text-muted); margin-right:3px; }
+  #coords-container .coord-value { font-family:'Space Grotesk',monospace; font-weight:600; color:var(--text-primary); }

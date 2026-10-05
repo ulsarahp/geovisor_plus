@@ -1,0 +1,23 @@
+/* ================================================================
+    LEGEND
+  ================================================================ */
+#leyenda {
+   position: absolute; bottom: 90px; right: 16px; z-index: 1000;
+   background: var(--panel-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+   border: 1px solid var(--border-medium); border-radius: var(--r-md);
+   padding: 0.6rem 0.72rem; max-width: 215px; max-height: 275px; overflow-y: auto;
+   display: none; box-shadow: var(--shadow-lg);
+  }
+  .leyenda-titulo { font-size:0.62rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.38rem; padding-bottom:0.28rem; border-bottom:1px solid var(--border-subtle); }
+  .leyenda-item { display:flex; align-items:center; gap:0.38rem; margin:0.18rem 0; }
+  .leyenda-color { width:11px; height:5px; border-radius:3px; flex-shrink:0; }
+  .leyenda-label { font-size:0.6rem; color:var(--text-secondary); font-weight:500; }
+  .leyenda-sub { padding-left:0.9rem; font-size:0.56rem; color:var(--text-muted); }
+  /* leyenda en 2 columnas con wrap cuando hay muchos elementos (sin scroll) */
+  .leyenda-item { min-width:0; break-inside:avoid; }
+  .leyenda-label { min-width:0; overflow-wrap:anywhere; word-break:break-word; white-space:normal; }
+  .leyenda-cols { column-gap:0.9rem; }
+  #leyenda.dos-col { max-width:320px; max-height:none; overflow:visible; }
+  #leyenda.dos-col .leyenda-cols { column-count:2; }
+  #dashboard-leyenda.dos-col .leyenda-cols { column-count:2; column-gap:1rem; }
+  #dashboard-leyenda-card:has(.dos-col) { max-height:none; }

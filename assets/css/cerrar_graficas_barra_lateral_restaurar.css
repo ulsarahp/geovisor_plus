@@ -1,0 +1,9 @@
+/* ================================================================
+    Cerrar gráficas barra lateral + restaurar
+  ================================================================ */
+.btn-cerrar-grafico { background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-xs); width:20px; height:20px; font-size:0.55rem; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; color:var(--text-muted); flex-shrink:0; transition:all var(--t-fast) var(--ease); }
+  .btn-cerrar-grafico:hover { background:rgba(239,68,68,0.12); color:#f87171; border-color:rgba(239,68,68,0.28); transform:scale(1.1); }
+  .grafico-container.grafico-cerrado { display:none !important; }
+  #btn-restaurar-graficos { display:none; font-size:0.58rem; padding:0.22rem 0.55rem; border:1px solid var(--border-subtle); border-radius:var(--r-sm); background:var(--bg-glass); color:var(--text-muted); cursor:pointer; font-family:'Inter',sans-serif; margin-top:0.3rem; }
+  #btn-restaurar-graficos.show { display:inline-flex; align-items:center; gap:0.3rem; }
+  #btn-restaurar-graficos:hover { background:var(--bg-glass-hover); color:var(--text-primary); }

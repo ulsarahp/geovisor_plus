@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+
+
+
+<html lang="es">
+
+
+
+<head>
+
+
+
+ <meta charset="UTF-8" />
+
+
+
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+
+ <title>Geovisor CONANP · Sistema de Información Geográfica</title>
+
+
+
+ <meta name="description" content="Geovisor CONANP - Sistema de Información Geográfica para Áreas Naturales Protegidas y ADVC de México." />
+
+
+
+ <meta name="color-scheme" content="dark light" />
+
+
+
+ <script src="assets/js/anti_fouc.js?v=20261004"></script>
+
+
+
+
+
+
+
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+
+
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+
+
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+
+
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/shpjs/4.0.0/shp.min.js"></script>
+
+
+
+ <script src="https://cdn.jsdelivr.net/npm/leaflet.browser.print@2.0.2/dist/leaflet.browser.print.min.js"></script>
+
+
+
+ <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+
+
+ <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.1.0/dist/dom-to-image-more.min.js"></script>
+
+
+
+
+
+
+
+   <link rel="stylesheet" href="assets/css/app.css?v=20261004" />
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+
+
+
+<!-- HEADER -->
+
+
+
+<header id="header">
+
+
+
+ <div class="header-brand">
+
+
+
+  <div class="header-logo-wrap"><i class="fas fa-earth-americas"></i></div>
+
+
+
+  <div class="header-title">
+
+
+
+   <div class="header-title-main">Geovisor CONANP</div>
+
+
+
+   <div class="header-title-sub">Sistema de Información Geográfica CONANP</div>
+
+
+
+  </div>
+
+
+
+ </div>
+
+
+
+  <div class="header-status status-disconnected" id="system-status"><span class="status-dot"></span><span id="system-status-text">Sin conexión</span></div>
+
+
+
+  <div class="header-help">
+
+
+
+   <button id="btn-tour-header" title="Recorrido guiado" aria-label="Iniciar tutorial"><i class="fas fa-graduation-cap"></i></button>
+
+
+
+   <button id="btn-faq-header" title="Preguntas frecuentes" aria-label="Preguntas frecuentes"><i class="fas fa-circle-question"></i></button>
+
+
+
+  </div>
+
+
+
+  <button id="theme-toggle" aria-label="Cambiar entre tema oscuro y claro" title="Cambiar tema"><i class="fas fa-sun"></i></button>
+
+
+
+  <nav class="header-tabs">
+
+
+
+  <button class="tab active" data-tab="general"><i class="fas fa-map-marked-alt"></i>General</button>
+
+
+
+  <button class="tab" data-tab="advc"><i class="fas fa-tree"></i>ADVC</button>
+
+
+
+  <button class="tab" data-tab="dashboard"><i class="fas fa-chart-line"></i>Dashboard</button>
+
+
+
+ </nav>
+
+
+
+</header>
+
+
+
+
+
+
+
+<div id="main">
+
+
+
+ <!-- PANEL -->
+
+
+
+ <aside id="panel">
+
+
+
+  <div class="panel-header-row">
+
+
+
+   <h2><i class="fas fa-layers"></i> Capas del mapa</h2>
+
+
+
+   <button class="panel-close" id="panel-close" aria-label="Cerrar panel de capas"><i class="fas fa-times"></i></button>
+
+
+
+  </div>
+
+
+
+
+
+
+
+  <div id="status"></div>
+
+
+
+
+
+
+
+  <div id="contador">
+
+
+
+   <div class="stat-pill stat-anp">
+
+
+
+    <span class="stat-pill-label">ANP en vista</span>
+
+
+
+    <span class="stat-pill-value" id="cont-anp">-</span>
+
+
+
+   </div>
+
+
+
+   <div class="stat-pill stat-advc">
+
+
+
+    <span class="stat-pill-label">ADVC en vista</span>
+
+
+
+    <span class="stat-pill-value" id="cont-advc">-</span>
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+
+
+
+
+   <div id="buscador">
+
+
+
+    <label for="inputBusqueda" class="sr-only">Buscar área o polígono</label>
+
+
+
+    <input type="text" id="inputBusqueda" placeholder="Buscar área o polígono..." autocomplete="off" />
+
+
+
+    <button class="btn-search" id="btnBuscar" aria-label="Buscar área"><i class="fas fa-search"></i></button>
+
+
+
+   </div>
+
+
+
+  <div id="resultados-busqueda"></div>
+
+
+
+
+
+
+
+  <div id="cargar-capa">
+
+
+
+   <button class="btn-upload" id="btnCargarCapa"><i class="fas fa-upload"></i> Cargar capa local</button>
+
+
+
+   <input type="file" id="inputCargarCapa" accept=".geojson,.json,.kml,.zip" multiple style="display:none;">
+
+
+
+  </div>
+
+
+
+
+
+
+
+  <div id="analisis-panel" style="display:none">
+
+
+
+   <div class="analisis-title"><i class="fas fa-flask"></i> Análisis espacial</div>
+
+
+
+   <div class="analisis-desc">Cruza tu información con capas CONANP. Dibuja en el mapa o carga una capa para activar.</div>
+
+
+
+   <label for="analisis-fuente">Fuente - usuario / dibujo</label>
+
+
+
+   <select id="analisis-fuente"><option value="">- Selecciona fuente -</option></select>
+
+
+
+   <label for="analisis-destino">Destino - CONANP</label>
+
+
+
+   <select id="analisis-destino"><option value="">- Selecciona destino -</option></select>
+
+
+
+   <button class="btn-analizar" id="btn-ejecutar-analisis" disabled><i class="fas fa-chart-bar"></i> Analizar vs capa CONANP</button>
+
+
+
+   <small style="font-size:0.54rem;color:var(--text-muted)">Selecciona una fuente y una capa CONANP (ANP, ADVC, Regiones) para generar el informe.</small>
+
+
+
+  </div>
+
+
+
+
+
+
+
+  <div class="section-label"><i class="fas fa-database"></i> Capas disponibles</div>
+
+
+
+
+
+
+
+  <div id="capa-list">
+
+
+
+   <div id="list-container">
+
+
+
+    <p class="sin-capas"><i class="fas fa-spinner fa-spin"></i> Conectando...</p>
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+
+
+
+
+   <div id="grafico-anp-conteo" class="grafico-container">
+
+
+
+    <h4><span><i class="fas fa-chart-bar" style="color:var(--brand-secondary);margin-right:3px"></i>Número de ANP por Categoría de Manejo</span><button class="btn-expandir" data-target="chartAnpCount" aria-label="Ampliar gráfico ANP conteo"><i class="fas fa-expand-alt"></i></button><button class="btn-cerrar-grafico" data-close="grafico-anp-conteo" aria-label="Cerrar gráfico" title="Cerrar"><i class="fas fa-times"></i></button></h4>
+
+
+
+    <canvas id="chartAnpCount"></canvas>
+
+
+
+   </div>
+
+
+
+   <div id="grafico-anp-superficie" class="grafico-container">
+
+
+
+    <h4><span><i class="fas fa-chart-pie" style="color:var(--brand-secondary);margin-right:3px"></i>SUPERFICIE DE ANP POR CATEGORIA DE MANEJO</span><button class="btn-expandir" data-target="chartAnpArea" aria-label="Ampliar gráfico ANP superficie"><i class="fas fa-expand-alt"></i></button><button class="btn-cerrar-grafico" data-close="grafico-anp-superficie" aria-label="Cerrar gráfico" title="Cerrar"><i class="fas fa-times"></i></button></h4>
+
+
+
+    <canvas id="chartAnpArea"></canvas>
+
+
+
+   </div>
+
+
+
+   <div id="grafico-advc" class="grafico-container grafico-oculto">
+
+
+
+    <h4><span><i class="fas fa-chart-pie" style="color:#c084fc;margin-right:3px"></i>Propiedad Social ADVC</span><button class="btn-expandir" data-target="chartAdvc" aria-label="Ampliar gráfico ADVC"><i class="fas fa-expand-alt"></i></button><button class="btn-cerrar-grafico" data-close="grafico-advc" aria-label="Cerrar gráfico" title="Cerrar"><i class="fas fa-times"></i></button></h4>
+
+
+
+    <canvas id="chartAdvc"></canvas>
+
+
+
+   </div>
+
+
+
+   <button id="btn-restaurar-graficos" aria-label="Restaurar gráficos"><i class="fas fa-eye"></i> Restaurar gráficos</button>
+
+
+
+  </aside>
+
+
+
+
+
+
+
+ <div id="panel-overlay"></div>
+
+
+
+
+
+
+
+ <div id="map-container">
+
+
+
+  <div id="map"></div>
+
+
+
+  <div id="coords-container"><span class="coord-label">ðŸ“</span><span class="coord-value" id="coords-value">-</span></div>
+
+
+
+  <div id="leyenda"></div>
+
+
+
+
+
+
+
+  <!-- DASHBOARD -->
+
+
+
+    <div id="dashboard-container">
+
+
+
+      <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
+
+
+
+        <button id="btn-print-dashboard" title="Imprimir dashboard" style="background:var(--bg-card); border:1px solid var(--border-medium); border-radius:var(--r-sm); padding:0.38rem 0.7rem; font-size:0.72rem; cursor:pointer; color:var(--text-secondary); display:inline-flex; align-items:center; gap:0.35rem; box-shadow:var(--shadow-sm);"><i class="fas fa-print"></i> Imprimir</button>
+
+
+
+        <button id="btn-print-area-dashboard" title="Imprimir área seleccionada del dashboard" style="background:var(--bg-card); border:1px solid var(--border-medium); border-radius:var(--r-sm); padding:0.38rem 0.7rem; font-size:0.72rem; cursor:pointer; color:var(--text-secondary); display:inline-flex; align-items:center; gap:0.35rem; box-shadow:var(--shadow-sm);"><i class="fas fa-vector-square"></i> Área</button>
+
+
+
+        <div id="filtros-cascade-wrap">
+
+
+
+          <button id="btn-filtros-cascade" title="Filtros del dashboard" aria-label="Abrir filtros del dashboard"><i class="fas fa-filter"></i> Filtros</button>
+
+
+
+          <div id="filtros-cascade-menu" role="menu" aria-label="Filtros del dashboard">
+
+
+
+            <label for="filtro-casc-cat">Categoría de manejo</label>
+
+
+
+            <select id="filtro-casc-cat"><option value="">Todas</option></select>
+
+
+
+            <label for="filtro-casc-estado">Estado</label>
+
+
+
+            <select id="filtro-casc-estado"><option value="">Todos</option></select>
+
+
+
+            <label for="filtro-casc-prop">Tipo de propiedad ADVC</label>
+
+
+
+            <select id="filtro-casc-prop"><option value="">Todos</option></select>
+
+
+
+            <div class="filtros-cascade-btns">
+
+
+
+              <button id="btn-aplicar-filtros-casc" class="primary">Aplicar + zoom</button>
+
+
+
+              <button id="btn-limpiar-filtros-casc">Limpiar</button>
+
+
+
+            </div>
+
+
+
+            <span id="filtros-cascade-info">Los filtros también atenúan el mapa.</span>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+        <button id="dashboard-close-btn" style="margin-left:auto; background:var(--bg-card); border:1px solid var(--border-medium); border-radius:50%; width:32px; height:32px; font-size:0.82rem; cursor:pointer; color:var(--text-secondary); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-md);"><i class="fas fa-times"></i></button>
+
+
+
+      </div>
+
+
+
+       <div id="dashboard-filter-bar" style="display:none;margin-bottom:0.6rem;padding:0.3rem 0.5rem;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:var(--r-sm);font-size:0.58rem;color:var(--text-secondary);align-items:center;gap:0.35rem;flex-wrap:wrap;max-height:72px;overflow-y:auto;">
+
+
+
+    <i class="fas fa-filter" style="color:var(--brand-secondary)"></i>
+
+
+
+    <span id="filter-status-text"></span>
+
+
+
+    <button id="clear-filters-btn" style="background:var(--bg-glass-hover);border:1px solid var(--border-medium);border-radius:var(--r-xs);padding:0.15rem 0.5rem;font-size:0.58rem;cursor:pointer;color:var(--text-muted);font-family:Inter,sans-serif;margin-left:auto">Limpiar filtros</button>
+
+
+
+   </div>
+
+
+
+   <div class="dashboard-fusedash">
+
+
+
+
+
+
+
+    <div class="widget-card kpi-1">
+
+
+
+     <div class="kpi-accent"></div>
+
+
+
+     <div class="widget-header"><div class="widget-title">Superficie total ANP (ha)</div><div class="btn-group"><button class="btn-copy" data-copy="dash-kpi-sup"><i class="fas fa-copy"></i></button></div></div>
+
+
+
+     <div class="kpi-value" id="dash-kpi-sup">-</div>
+
+
+
+     <div class="kpi-sub">Hectáreas en Áreas Naturales Protegidas</div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="widget-card kpi-2">
+
+
+
+     <div class="kpi-accent"></div>
+
+
+
+     <div class="widget-header"><div class="widget-title">Total áreas ANP</div><div class="btn-group"><button class="btn-copy" data-copy="dash-kpi-count"><i class="fas fa-copy"></i></button></div></div>
+
+
+
+     <div class="kpi-value" id="dash-kpi-count">-</div>
+
+
+
+     <div class="kpi-sub">Polígonos federales registrados</div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="widget-card kpi-3">
+
+
+
+     <div class="kpi-accent"></div>
+
+
+
+     <div class="widget-header"><div class="widget-title">Total ADVC</div><div class="btn-group"><button class="btn-copy" data-copy="dash-kpi-advc"><i class="fas fa-copy"></i></button></div></div>
+
+
+
+     <div class="kpi-value" id="dash-kpi-advc">-</div>
+
+
+
+     <div class="kpi-sub">Áreas voluntarias de conservación</div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="widget-card kpi-4">
+
+
+
+       <div class="kpi-accent" style="background:linear-gradient(90deg,#6F4489,#8a5fc0)"></div>
+
+
+
+       <div class="widget-header"><div class="widget-title">Superficie certificada (ADVC)</div><div class="btn-group"><button class="btn-copy" data-copy="dash-kpi-adv-cert"><i class="fas fa-copy"></i></button></div></div>
+
+
+
+       <div class="kpi-value" id="dash-kpi-adv-cert">-</div>
+
+
+
+       <div class="kpi-sub">Hectáreas certificadas ADVC</div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+    <div class="widget-card kpi-5">
+
+
+
+       <div class="kpi-accent" style="background:linear-gradient(90deg,#1a5c4e,#2d9a87)"></div>
+
+
+
+       <div class="widget-header"><div class="widget-title">ANP en SINANP</div><div class="btn-group"><button class="btn-copy" data-copy="dash-kpi-sinanp"><i class="fas fa-copy"></i></button></div></div>
+
+
+
+       <div class="kpi-value" id="dash-kpi-sinanp">-</div>
+
+
+
+       <div class="kpi-sub">En Sistema Nacional</div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+    <div class="widget-card kpi-6">
+
+
+
+       <div class="kpi-accent" style="background:linear-gradient(90deg,#8a1a3a,#c0395a)"></div>
+
+
+
+       <div class="widget-header"><div class="widget-title">ANP con Programa de Manejo</div><div class="btn-group"><button class="btn-copy" data-copy="dash-kpi-pm"><i class="fas fa-copy"></i></button></div></div>
+
+
+
+       <div class="kpi-value" id="dash-kpi-pm">-</div>
+
+
+
+       <div class="kpi-sub">Con PM vigente</div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+    <div class="widget-card map-widget"><div id="map-dashboard"></div></div>
+
+
+
+
+
+
+
+    <!-- V4: tarjeta "Filtros activos" eliminada: se usa el botón Filtros en cascada junto a Imprimir -->
+
+
+
+     <div class="widget-card kpi-leyenda" id="dashboard-leyenda-card" style="grid-column:span 12; padding:0.7rem;">
+
+
+
+       <div class="widget-header"><div class="widget-title"><i class="fas fa-palette"></i> Simbología - capas visibles</div><div class="btn-group"><button class="btn-expandir" id="btn-colapsar-simbologia" title="Minimizar/visualizar simbología" aria-label="Minimizar o mostrar simbología" aria-expanded="true"><i class="fas fa-chevron-up"></i></button></div></div>
+
+
+
+       <div id="dashboard-leyenda" style="font-size:0.58rem; line-height:1.4; word-wrap:break-word;"></div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+      <div class="widget-card chart-donut">
+
+
+
+      <div class="widget-header"><div class="widget-title">Tipo de superficie protegida</div><div class="btn-group"><button class="btn-expandir" data-target="dashChartTerrestre" aria-label="Ampliar gráfico terrestre-marina"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" data-download="dashChartTerrestre" aria-label="Descargar gráfico terrestre-marina"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="png" data-target="dashChartTerrestre">PNG</button><button data-format="jpg" data-target="dashChartTerrestre">JPG</button><button data-format="csv" data-target="dashChartTerrestre">CSV</button></div></div></div></div>
+
+
+
+      <div class="canvas-container"><canvas id="chart-terrestre-marina"></canvas></div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+     <div class="widget-card chart-bar-cat">
+
+
+
+      <div class="widget-header"><div class="widget-title" id="chart-bar-cat-title">Superficie por categoría</div><div class="btn-group"><button class="btn-toggle" id="toggle-bar-cat" aria-label="Alternar conteo/superficie categoría"><span class="toggle-slider"></span>#/ha</button><button class="btn-expandir" data-target="dashChartBarCat" aria-label="Ampliar gráfico categoría"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" aria-label="Descargar gráfico categoría"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="png" data-target="dashChartBarCat">PNG</button><button data-format="jpg" data-target="dashChartBarCat">JPG</button><button data-format="csv" data-target="dashChartBarCat">CSV</button></div></div></div></div>
+
+
+
+      <div class="canvas-container"><canvas id="chart-bar-cat"></canvas></div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+     <div class="widget-card tabla-widget">
+
+
+
+      <div class="widget-header"><div class="widget-title">Tabla de datos</div><div class="btn-group"><button class="btn-expandir" data-target="tabla" aria-label="Ampliar tabla"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" aria-label="Descargar tabla CSV"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="csv" data-target="tabla">CSV</button></div></div></div></div>
+
+
+
+      <div class="tabla-tabs"><button class="active" data-tabla="anp">ANP</button><button data-tabla="advc">ADVC</button></div>
+
+
+
+      <div style="display:flex; gap:0.3rem; margin-bottom:0.4rem;"><input id="filtro-tabla" placeholder="Filtrar tabla..." style="flex:1; font-size:0.62rem; padding:0.28rem 0.4rem; border:1px solid var(--border-subtle); border-radius:var(--r-sm); background:var(--bg-surface); color:var(--text-primary);"><button id="btn-limpiar-filtro" style="font-size:0.58rem; padding:0.28rem 0.55rem; border:1px solid var(--border-subtle); border-radius:var(--r-sm); background:var(--bg-glass); color:var(--text-muted); cursor:pointer; font-family:Inter,sans-serif;">Limpiar</button></div>
+
+
+
+      <div class="tabla-container" id="tabla-contenedor"><table id="tabla-datos"><thead><tr></tr></thead><tbody></tbody></table></div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+     <div class="widget-card chart-hbar-1">
+
+
+
+      <div class="widget-header"><div class="widget-title" id="chart-hbar-estados-title">Top estados por superficie ADVC</div><div class="btn-group"><button class="btn-toggle" id="toggle-hbar-estados" aria-label="Alternar conteo/superficie estados"><span class="toggle-slider"></span>#/ha</button><button class="btn-expandir" data-target="dashChartBarEstados" aria-label="Ampliar gráfico estados"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" aria-label="Descargar gráfico estados"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="png" data-target="dashChartBarEstados">PNG</button><button data-format="jpg" data-target="dashChartBarEstados">JPG</button><button data-format="csv" data-target="dashChartBarEstados">CSV</button></div></div></div></div>
+
+
+
+      <div class="canvas-container"><canvas id="chart-hbar-estados"></canvas></div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+      <div class="widget-card chart-hbar-2">
+
+
+
+       <div class="widget-header"><div class="widget-title">Tipo de propiedad ADVC</div><div class="btn-group"><button class="btn-expandir" data-target="dashChartAdvcProp" aria-label="Ampliar gráfico propiedad ADVC"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" aria-label="Descargar gráfico propiedad ADVC"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="png" data-target="dashChartAdvcProp">PNG</button><button data-format="jpg" data-target="dashChartAdvcProp">JPG</button><button data-format="csv" data-target="dashChartAdvcProp">CSV</button></div></div></div></div>
+
+
+
+       <div class="canvas-container"><canvas id="chart-advc-propiedad"></canvas></div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <div class="widget-card chart-periodo" style="grid-column:span 6;">
+
+
+
+       <div class="widget-header"><div class="widget-title">ANP decretadas por periodo presidencial (1917“actual) - prim_dof</div><div class="btn-group"><select id="filtro-periodo-cat" style="font-size:0.58rem; padding:0.15rem 0.28rem; border-radius:var(--r-xs); border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary);"><option value="">Todas las categorías</option></select><button class="btn-expandir" data-target="dashChartPeriodo" aria-label="Ampliar gráfico periodo"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" aria-label="Descargar gráfico periodo"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="png" data-target="dashChartPeriodo">PNG</button><button data-format="jpg" data-target="dashChartPeriodo">JPG</button><button data-format="csv" data-target="dashChartPeriodo">CSV</button></div></div></div></div>
+
+
+
+       <div class="canvas-container" style="min-height:260px;"><canvas id="chart-periodo"></canvas></div>
+
+
+
+       <div id="periodo-botones" style="display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.6rem;"></div>
+
+
+
+       <div id="periodo-detalle" style="display:none; margin-top:0.7rem; padding:0.7rem; background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-md);">
+
+
+
+         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+
+
+
+            <h4 id="periodo-detalle-titulo" style="font-size:0.62rem; font-weight:700; margin:0; color:var(--text-primary);"></h4>
+
+
+
+            <button id="btn-toggle-periodo-detalle" class="btn-toggle" aria-label="Alternar conteo/superficie en detalle" title="Conteo / superficie" style="font-size:0.56rem; padding:0.18rem 0.45rem;"><span class="toggle-slider"></span>#/ha</button>
+
+
+
+            <button onclick="document.getElementById('periodo-detalle').style.display='none'" style="background:none; border:none; cursor:pointer; font-size:1rem; color:var(--text-muted); line-height:1;">Ã-</button>
+
+
+
+         </div>
+
+
+
+         <div style="height:220px;"><canvas id="chart-periodo-detalle"></canvas></div>
+
+
+
+       </div>
+
+
+
+       <div style="display:flex; gap:1rem; margin-top:0.6rem; flex-wrap:wrap; font-size:0.6rem; color:var(--text-muted);">
+
+
+
+         <span><b id="kpi-sinanp">-</b> en SINANP</span>
+
+
+
+         <span><b id="kpi-pm">-</b> con Programa de Manejo</span>
+
+
+
+         <span style="margin-left:auto; font-size:0.55rem; opacity:0.8;">Muestra la cantidad y/o superficie de ANP decretadas en un periodo presidencial</span>
+
+
+
+       </div>
+
+
+
+       </div>
+
+
+
+
+
+
+
+      <div class="widget-card chart-periodo-advc" style="grid-column:span 6;">
+
+
+
+       <div class="widget-header"><div class="widget-title">ADVC certificadas por periodo</div><div class="btn-group"><button class="btn-toggle" id="toggle-dash-periodo-advc" aria-label="Alternar conteo/superficie ADVC por periodo"><span class="toggle-slider"></span>#/ha</button><button class="btn-expandir" data-target="dashChartPeriodoAdvc" aria-label="Ampliar gráfico ADVC por periodo"><i class="fas fa-expand-alt"></i></button><div class="dropdown-download"><button class="btn-download" aria-label="Descargar gráfico ADVC periodo"><i class="fas fa-download"></i></button><div class="dropdown-menu"><button data-format="png" data-target="dashChartPeriodoAdvc">PNG</button><button data-format="jpg" data-target="dashChartPeriodoAdvc">JPG</button><button data-format="csv" data-target="dashChartPeriodoAdvc">CSV</button></div></div></div></div>
+
+
+
+       <div class="canvas-container" style="min-height:260px;"><canvas id="chart-periodo-advc"></canvas></div>
+
+
+
+       <div style="display:flex; gap:1rem; margin-top:0.6rem; flex-wrap:wrap; font-size:0.6rem; color:var(--text-muted);">
+
+
+
+         <span style="font-size:0.55rem; opacity:0.8;">Muestra la cantidad y/o superficie certificada ADVC por periodo presidencial</span>
+
+
+
+       </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+    </div><!-- /dashboard-fusedash -->
+
+
+
+
+
+
+
+   <!-- HINT: Indicador de scroll (solo móvil) - agregado módulo 1 -->
+
+
+
+   <div class="dashboard-scroll-hint" id="dashboard-scroll-hint" style="display: none;">
+
+
+
+     <i class="fas fa-chevron-right"></i>
+
+
+
+   </div>
+
+
+
+
+
+
+
+  </div><!-- /dashboard-container -->
+
+
+
+ </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- MODAL -->
+
+
+
+<div class="modal-overlay" id="modal-grafico">
+
+
+
+ <div class="modal-content">
+
+
+
+  <div class="modal-header"><h3 id="modal-title">Vista ampliada</h3><button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button></div>
+
+
+
+  <div class="modal-body" id="modal-body"><canvas id="modal-canvas"></canvas></div>
+
+
+
+  <div class="modal-footer">
+
+
+
+   <button class="btn-download-modal" id="modal-download-png"><i class="fas fa-image"></i> PNG</button>
+
+
+
+   <button class="btn-download-modal" id="modal-download-jpg"><i class="fas fa-image"></i> JPG</button>
+
+
+
+   <button class="btn-download-modal" id="modal-download-csv"><i class="fas fa-file-csv"></i> CSV</button>
+
+
+
+  </div>
+
+
+
+ </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ANÁLISIS - overlay de informe -->
+
+
+
+<div id="analisis-overlay">
+
+
+
+ <div id="analisis-report">
+
+
+
+  <div class="analisis-header">
+
+
+
+   <div class="analisis-header-top"><i class="fas fa-shield-alt"></i> CONANP · Comisión Nacional de Áreas Naturales Protegidas - Gobierno de México</div>
+
+
+
+   <div class="analisis-header-main">
+
+
+
+    <h2 id="analisis-title">Análisis - 0 ANP · 0% de la superficie en ANP<small id="analisis-subtitle">Fuente vs destino</small></h2>
+
+
+
+    <button class="close-report" id="analisis-close" title="Cerrar"><i class="fas fa-times"></i></button>
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+  <div class="analisis-body" id="analisis-body">
+
+
+
+   <!-- KPIs -->
+
+
+
+   <div class="analisis-kpis" id="analisis-kpis"></div>
+
+
+
+   <div class="analisis-actions">
+
+
+
+    <button class="primary" id="analisis-ver-mapa"><i class="fas fa-map"></i> Ver en mapa</button>
+
+
+
+    <button id="analisis-quitar"><i class="fas fa-eraser"></i> Quitar selección</button>
+
+
+
+    <button id="analisis-pdf"><i class="fas fa-file-pdf"></i> Descargar PDF</button>
+
+
+
+    <button id="analisis-csv"><i class="fas fa-file-csv"></i> Descargar CSV</button>
+
+
+
+   </div>
+
+
+
+   <div class="analisis-desglose-title">Desglose de la superficie / elementos dentro del destino</div>
+
+
+
+   <div class="analisis-filtros" id="analisis-filtros"></div>
+
+
+
+   <div class="analisis-grid" id="analisis-grid"></div>
+
+
+
+   <div id="analisis-detalle"></div>
+
+
+
+   <div class="analisis-disclaimer">
+
+
+
+    <b>Información de carácter informativo.</b> Los resultados aquí presentados no constituyen un dictamen técnico. Para ANP federales, consultar la página oficial de la <b>Comisión Nacional de Áreas Naturales Protegidas (CONANP)</b>. La CONANP no se hace responsable del uso que el usuario le dé a los datos.
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+ </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="print-loading" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.52); backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px); z-index:10001; align-items:center; justify-content:center; flex-direction:column; gap:14px; color:#fff; font-family:'Inter',sans-serif;">
+
+
+
+ <div style="width:44px; height:44px; border:3px solid rgba(255,255,255,0.28); border-top-color:#fff; border-radius:50%; animation:spin 0.85s linear infinite;"></div>
+
+
+
+ <div style="font-size:13px; font-weight:700; letter-spacing:0.2px;">Generando impresión...</div>
+
+
+
+ <div style="font-size:11px; opacity:0.82;">Esto puede tardar unos segundos - no cierre la página</div>
+
+
+
+</div>
+
+
+
+<style>@keyframes spin{ to{ transform:rotate(360deg); } }
+
+
+
+  /* Metadatos - overlay como análisis */
+
+
+
+  #metadata-overlay { display:none; position:fixed; inset:0; background:var(--veil-strong); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:9998; justify-content:center; align-items:flex-start; padding:1rem; overflow-y:auto; }
+
+
+
+  #metadata-overlay.active { display:flex; }
+
+
+
+  #metadata-report { background:var(--bg-surface); border:1px solid var(--border-medium); border-radius:var(--r-xl); width:100%; max-width:980px; max-height:92vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.35), var(--shadow-xl); animation:modalin 0.32s var(--ease-spring); }
+
+
+
+  .metadata-header { background:linear-gradient(135deg, #0f2a3a 0%, #1a5c4e 50%, #6B1132 100%); color:#fff; padding:0; display:flex; flex-direction:column; position:sticky; top:0; z-index:5; border-radius:var(--r-xl) var(--r-xl) 0 0; overflow:hidden; }
+
+
+
+  .metadata-header-top { display:flex; align-items:center; gap:0.6rem; padding:0.5rem 1rem 0.35rem; background:rgba(0,0,0,0.18); border-bottom:1px solid rgba(255,255,255,0.12); font-size:0.52rem; letter-spacing:0.6px; text-transform:uppercase; font-weight:600; opacity:0.9; }
+
+
+
+  .metadata-header-main { display:flex; align-items:center; justify-content:space-between; padding:0.75rem 1rem 0.85rem; gap:0.8rem; }
+
+
+
+  .metadata-header-main h2 { font-family:'Space Grotesk',sans-serif; font-size:0.92rem; font-weight:800; line-height:1.25; flex:1; min-width:0; }
+
+
+
+  .metadata-header-main h2 small { display:block; font-weight:400; font-size:0.62rem; opacity:0.88; margin-top:3px; font-family:'Inter',sans-serif; }
+
+
+
+  .metadata-header .close-report { background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.22); color:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all var(--t-fast) var(--ease); flex-shrink:0; }
+
+
+
+  .metadata-header .close-report:hover { background:rgba(255,255,255,0.24); transform:rotate(90deg); }
+
+
+
+  .metadata-body { padding:0.9rem 1rem 1rem; display:flex; flex-direction:column; gap:0.9rem; }
+
+
+
+  .metadata-actions { display:flex; gap:0.45rem; flex-wrap:wrap; }
+
+
+
+  .metadata-actions button { font-size:0.62rem; padding:0.36rem 0.85rem; border-radius:var(--r-full); border:1px solid var(--border-subtle); background:var(--bg-glass); color:var(--text-primary); cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:all var(--t-fast) var(--ease); display:inline-flex; align-items:center; gap:0.32rem; }
+
+
+
+  .metadata-actions button.primary { background:linear-gradient(135deg, #1a5c4e, #0f2a3a); color:#fff; border-color:transparent; box-shadow:0 3px 10px rgba(26,92,78,0.28); }
+
+
+
+  .metadata-actions button:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.12); }
+
+
+
+  .metadata-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+
+
+
+  @media (max-width:700px){ .metadata-grid{ grid-template-columns:1fr; } }
+
+
+
+  .metadata-card { background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-md); padding:0.75rem 0.85rem; }
+
+
+
+  .metadata-card h4 { font-family:'Space Grotesk',sans-serif; font-size:0.68rem; font-weight:700; color:var(--brand-secondary); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
+
+
+
+  .metadata-card h4 i { color:var(--text-muted); font-size:0.7rem; }
+
+
+
+  .metadata-card p, .metadata-card li { font-size:0.72rem; line-height:1.55; color:var(--text-secondary); }
+
+
+
+  .metadata-card ul { margin:0.35rem 0 0 1.1rem; }
+
+
+
+  .metadata-card li { margin:0.15rem 0; }
+
+
+
+  .metadata-card .meta-row { display:flex; justify-content:space-between; padding:0.3rem 0; border-bottom:1px solid var(--border-subtle); font-size:0.7rem; }
+
+
+
+  .metadata-card .meta-row:last-child{ border-bottom:none; }
+
+
+
+  .metadata-card .meta-key { font-weight:600; color:var(--text-muted); font-size:0.66rem; text-transform:uppercase; letter-spacing:0.3px; }
+
+
+
+  .metadata-card .meta-val { color:var(--text-primary); font-weight:500; text-align:right; max-width:60%; }
+
+
+
+  .metadata-section-title { font-family:'Space Grotesk',sans-serif; font-size:0.74rem; font-weight:700; color:var(--text-primary); text-transform:uppercase; letter-spacing:0.4px; margin-top:0.2rem; border-top:1px solid var(--border-subtle); padding-top:0.85rem; display:flex; align-items:center; gap:0.4rem; }
+
+
+
+  .metadata-section-title::before{ content:''; width:3px; height:14px; background:linear-gradient(180deg, #1a5c4e, #6B1132); border-radius:999px; }
+
+
+
+  .metadata-bbox { display:grid; grid-template-columns:1fr 1fr; gap:0.4rem; font-size:0.68rem; }
+
+
+
+  .metadata-bbox div { background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:6px; padding:0.4rem 0.5rem; display:flex; justify-content:space-between; }
+
+
+
+  .metadata-bbox b { color:var(--brand-secondary); }
+
+
+
+  .btn-info { background:var(--bg-glass); border:1px solid var(--border-subtle); color:var(--text-muted); width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font-size:0.7rem; transition:all var(--t-fast) var(--ease); flex-shrink:0; }
+
+
+
+  .btn-info:hover { background:var(--brand-secondary); color:#fff; border-color:var(--brand-secondary); transform:translateY(-1px); box-shadow:0 3px 10px rgba(26,92,78,0.25); }
+
+
+
+
+
+
+
+  
+
+
+
+  .metadata-minimap-wrap{position:static !important;width:100% !important;height:190px !important;border:1px solid var(--border-medium);border-radius:var(--r-md);overflow:hidden;background:#e0e7ef;margin:0 !important;}
+
+
+
+  .metadata-minimap { width:100%; height:100%; }
+
+
+
+  .metadata-header { position:relative; }
+
+
+
+  @media (max-width:700px){ .metadata-minimap-wrap{position:static !important;width:100% !important;height:190px !important;border:1px solid var(--border-medium);border-radius:var(--r-md);overflow:hidden;background:#e0e7ef;margin:0 !important;} }
+
+
+
+
+
+
+
+  
+
+  /* Metadatos - laptop 1366x768 optimizado */
+
+  #metadata-report { max-width:860px; max-height:88vh; }
+
+  @media (max-height:800px){
+
+    #metadata-report { max-height:92vh; }
+
+    .metadata-body { padding:0.75rem 0.85rem; gap:0.65rem; }
+
+    .metadata-card { padding:0.6rem 0.7rem; }
+
+  }
+
+  @media (max-width:1366px){
+
+    #metadata-report { max-width:780px; }
+
+    .metadata-grid { gap:0.6rem; }
+
+  }
+
+  @media (max-width:1024px){
+
+    #metadata-report { max-width:92vw; margin:0.5rem; }
+
+    .metadata-minimap-wrap{position:static !important;width:100% !important;height:190px !important;border:1px solid var(--border-medium);border-radius:var(--r-md);overflow:hidden;background:#e0e7ef;margin:0 !important;}
+
+  }
+
+  .metadata-minimap-wrap{position:static !important;width:100% !important;height:190px !important;border:1px solid var(--border-medium);border-radius:var(--r-md);overflow:hidden;background:#e0e7ef;margin:0 !important;}
+
+  @media (max-width:1366px){ .metadata-minimap-wrap{position:static !important;width:100% !important;height:190px !important;border:1px solid var(--border-medium);border-radius:var(--r-md);overflow:hidden;background:#e0e7ef;margin:0 !important;} }
+
+
+
+  
+
+  /* FAQ - laptop 1366x768 optimizado */
+
+  #faq-overlay { padding:0.6rem; }
+
+  #faq-report, .faq-modal { max-width:760px; max-height:88vh; }
+
+  @media (max-height:800px){
+
+    #faq-report, .faq-modal { max-height:92vh; }
+
+    .faq-body { padding:0.6rem 0.8rem; gap:0.5rem; }
+
+    .faq-item { font-size:0.72rem; }
+
+  }
+
+  @media (max-width:1366px){
+
+    #faq-report, .faq-modal { max-width:720px; }
+
+    .faq-header h2 { font-size:0.92rem; }
+
+    .faq-controls { padding:0.6rem 0.8rem; gap:0.4rem; }
+
+  }
+
+  @media (max-width:1024px){
+
+    #faq-report, .faq-modal { max-width:92vw; margin:0.4rem; }
+
+  }
+
+  .faq-body { display:flex; flex-direction:column; gap:0.6rem; overflow-y:auto; max-height:62vh; }
+
+  @media (max-height:750px){ .faq-body{ max-height:55vh; } }
+
+
+
+  
+
+  /* Metadatos v2 - recuadro dentro ventana, laptop 1366 optimizado */
+
+  #metadata-report { max-width:880px; max-height:90vh; }
+
+  .metadata-body { padding:0.9rem 1rem 1rem; display:flex; flex-direction:column; gap:0.75rem; }
+
+  .metadata-hero { display:grid; grid-template-columns:1fr 260px; gap:0.75rem; align-items:stretch; }
+
+  .metadata-minimap-wrap { position:static !important; width:100% !important; height:190px !important; border:1px solid var(--border-medium); border-radius:var(--r-md); overflow:hidden; box-shadow:var(--shadow-sm); background:#e0e7ef; margin:0 !important; top:auto !important; right:auto !important; z-index:1 !important; display:flex; flex-direction:column; }
+
+  .metadata-minimap { width:100%; height:100%; min-height:160px; flex:1; }
+
+  .metadata-minimap-caption { font-size:0.6rem; color:var(--text-muted); padding:0.3rem 0.5rem; background:var(--bg-surface); border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; gap:0.4rem; }
+
+  @media (max-width:1366px){
+
+    #metadata-report { max-width:800px; }
+
+    .metadata-hero { grid-template-columns:1fr 220px; }
+
+    .metadata-minimap-wrap { height:170px !important; }
+
+    .metadata-card { padding:0.6rem 0.7rem; }
+
+    .metadata-body { padding:0.75rem 0.85rem; gap:0.6rem; }
+
+  }
+
+  @media (max-width:1024px), (max-height:768px){
+
+    #metadata-report { max-width:94vw; max-height:94vh; margin:0.4rem; }
+
+    .metadata-hero { grid-template-columns:1fr; }
+
+    .metadata-minimap-wrap { height:170px !important; order:-1; }
+
+    .metadata-grid { grid-template-columns:1fr !important; }
+
+  }
+
+  /* FAQ laptop */
+
+  #faq-overlay { padding:0.6rem; }
+
+  .faq-modal { max-width:760px !important; max-height:88vh !important; }
+
+  .faq-body { max-height:60vh !important; overflow-y:auto; }
+
+  @media (max-width:1366px){
+
+    .faq-modal { max-width:720px !important; }
+
+    .faq-body { max-height:58vh !important; padding:0.7rem 0.9rem !important; }
+
+    .faq-header h2 { font-size:0.9rem !important; }
+
+  }
+
+  @media (max-height:768px){
+
+    .faq-modal { max-height:94vh !important; }
+
+    .faq-body { max-height:62vh !important; }
+
+  }
+
+
+
+  
+
+  /* Metadatos v3 - recuadro dentro ventana, laptop */
+
+  #metadata-report { max-width:880px; max-height:90vh; }
+
+  .metadata-body { padding:0.9rem 1rem 1rem; display:flex; flex-direction:column; gap:0.75rem; }
+
+  .metadata-hero { display:grid; grid-template-columns:1fr 260px; gap:0.75rem; align-items:start; }
+
+  .metadata-minimap-wrap { position:static !important; width:100% !important; height:auto !important; border:1px solid var(--border-medium); border-radius:var(--r-md); overflow:hidden; background:#e0e7ef; margin:0 !important; display:flex; flex-direction:column; box-shadow:var(--shadow-sm); }
+
+  .metadata-minimap { width:100%; height:190px; min-height:160px; }
+
+  .metadata-minimap-caption { font-size:0.6rem; color:var(--text-muted); padding:0.35rem 0.5rem; background:var(--bg-surface); border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; }
+
+  .metadata-header { position:sticky; top:0; z-index:5; }
+
+  @media (max-width:1366px){
+
+    #metadata-report { max-width:800px; }
+
+    .metadata-hero { grid-template-columns:1fr 220px; }
+
+    .metadata-minimap { height:170px; min-height:150px; }
+
+    .metadata-body { padding:0.75rem 0.85rem; gap:0.6rem; }
+
+    .metadata-card { padding:0.6rem 0.7rem; }
+
+    .faq-modal { max-width:720px !important; }
+
+    .faq-body { max-height:58vh !important; }
+
+  }
+
+  @media (max-width:1024px), (max-height:768px){
+
+    #metadata-report { max-width:94vw; max-height:94vh; }
+
+    .metadata-hero { grid-template-columns:1fr; }
+
+    .metadata-minimap { height:170px; }
+
+    .metadata-grid { grid-template-columns:1fr !important; }
+
+    .faq-modal { max-width:94vw !important; max-height:94vh !important; }
+
+    .faq-body { max-height:62vh !important; }
+
+  }
+
+
+
+  </style>
+
+
+
+
+
+
+
+<div leaflet-browser-print-content style="display:none;">
+
+
+
+ <!-- print-report ANTES del mapa para que el header guinda #6B1132 quede arriba del recuadro cuadrado 150mm en impresión -->
+
+
+
+ <div id="print-report" style="font-family:'Inter',sans-serif; color:#1a1a1a;">
+
+
+
+  <!-- Encabezado institucional como en análisis -->
+
+
+
+  <div style="background:linear-gradient(135deg, #4a0c22 0%, #6B1132 35%, #8a1a3a 65%, #1a5c4e 100%); color:#fff; padding:10px 14px; display:flex; align-items:center; gap:10px;">
+
+
+
+   <div style="width:38px; height:38px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px;"><i class="fas fa-leaf"></i></div>
+
+
+
+   <div style="flex:1;">
+
+
+
+    <h1 style="margin:0; font-size:12pt; color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.1;">Geovisor CONANP</h1>
+
+
+
+    <p style="margin:2px 0 0; font-size:6.5pt; color:rgba(255,255,255,0.85); letter-spacing:0.5px; text-transform:uppercase;">Comisión Nacional de Áreas Naturales Protegidas · Gobierno de México</p>
+
+
+
+   </div>
+
+
+
+   <div style="text-align:right; font-size:6pt; color:rgba(255,255,255,0.85); line-height:1.3;">
+
+
+
+    <div id="print-date"></div>
+
+
+
+    <div id="print-subtitle" style="font-size:6.5pt; font-weight:600; color:#fff;">Mapa General</div>
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+   <!-- Tira verde institucional como en análisis -->
+
+
+
+   <div style="background:#1a5c4e; height:4px; order:1; -webkit-print-color-adjust:exact; print-color-adjust:exact;"></div>
+
+
+
+   <!-- Metadatos -->
+
+
+
+   <div id="print-meta" style="font-size:7pt; color:#333; padding:8px 12px; background:#f8fafc; border-bottom:1px solid #e5e7eb; line-height:1.4;"></div>
+
+
+
+  <!-- Mapa se inserta automáticamente por leaflet.browser.print aquí -->
+
+
+
+  <!-- Leyenda y datos debajo del mapa cuadrado -->
+
+
+
+  <div style="padding:10px 12px;">
+
+
+
+   <div id="print-kpis" style="display:grid; grid-template-columns:repeat(4,1fr); gap:7px; margin:8px 0;"></div>
+
+
+
+   <div id="print-legend" style="font-size:7pt; border:1px solid #e5e7eb; border-radius:6px; padding:8px; background:#f9fafb; margin:8px 0;"></div>
+
+
+
+   <div style="display:flex; gap:8px; font-size:6.5pt; color:#555; margin:8px 0; flex-wrap:wrap;">
+
+
+
+    <span><b>Escala:</b> gráfica en el mapa (abajo-izquierda)</span>
+
+
+
+    <span>·</span>
+
+
+
+    <span><b>Norte:</b> â-² N en el mapa (arriba-derecha)</span>
+
+
+
+    <span>·</span>
+
+
+
+    <span><b>Fecha:</b> <span id="print-date-2"></span></span>
+
+
+
+    <span>·</span>
+
+
+
+    <span><b>Proyección:</b> WGS84</span>
+
+
+
+   </div>
+
+
+
+   <div id="print-fuentes" style="font-size:6pt; color:#444; border:1px solid #e5e7eb; border-radius:6px; padding:8px; background:#fff; margin:8px 0; line-height:1.4;">
+
+
+
+    <div style="font-weight:700; color:#6B1132; margin-bottom:4px; font-size:6.5pt;">Fuentes</div>
+
+
+
+    <div id="print-fuentes-list" style="font-size:6pt;"></div>
+
+
+
+   </div>
+
+
+
+   <div style="padding:8px; background:#fffbeb; border:1px solid #fcd34d; border-left:4px solid #f59e0b; border-radius:4px; font-size:6.5pt; color:#92400e; line-height:1.45;">
+
+
+
+    <b>Información de carácter informativo.</b> Los resultados aquí presentados no constituyen un dictamen técnico. Para ANP federales, consultar la página oficial de la Comisión Nacional de Áreas Naturales Protegidas (CONANP). La CONANP no se hace responsable del uso que el usuario le dé a los datos.
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+ </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- METADATOS - overlay como análisis -->
+
+<div id="metadata-overlay">
+
+  <div id="metadata-report">
+
+    <div class="metadata-header">
+
+      <div class="metadata-header-top"><i class="fas fa-circle-info"></i> CONANP · Metadatos geográficos - ISO 19115:2003</div>
+
+      <div class="metadata-header-main">
+
+        <h2 id="metadata-title">Metadatos de la capa<small id="metadata-subtitle">Información de identificación</small></h2>
+
+        <button class="close-report" id="metadata-close" title="Cerrar"><i class="fas fa-times"></i></button>
+
+      </div>
+
+    </div>
+
+    <div class="metadata-body" id="metadata-body">
+
+      <div class="metadata-actions">
+
+        <button class="primary" id="metadata-download-xml"><i class="fas fa-file-code"></i> Descargar XML (ISO 19115)</button>
+
+        <button class="primary" id="metadata-download-pdf"><i class="fas fa-file-pdf"></i> Descargar PDF</button>
+
+        <button id="metadata-download-json"><i class="fas fa-file-lines"></i> Descargar JSON</button>
+
+      </div>
+
+      <div id="metadata-content"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+    
+
+
+
+<!-- DISCLAIMER MODAL estilo MapBiomas -->
+
+
+
+<div id="disclaimer-modal" class="disclaimer-overlay" style="display:none;">
+
+
+
+ <div class="disclaimer-modal">
+
+
+
+  <div class="disclaimer-header">
+
+
+
+   <h2><i class="fas fa-info-circle"></i> Bienvenido al Geovisor CONANP</h2>
+
+
+
+   <button class="close-btn" id="disclaimer-close" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+
+
+
+  </div>
+
+
+
+  <div class="disclaimer-content">
+
+
+
+   <h4>Bienvenido al Geovisor de la Comisión Nacional de Áreas Naturales Protegidas (CONANP)</h4>
+
+
+
+   <p>Antes de proceder a consultar la información, le pedimos leer detenidamente lo siguiente:</p>
+
+
+
+   <h5>Origen de los datos</h5>
+
+
+
+   <p>Ãšnicamente las capas de información espacial contenidas dentro del grupo <b>"CONANP"</b> son generadas, validadas y administradas por esta Institución.</p>
+
+
+
+   <h5>Referentes geoespaciales</h5>
+
+
+
+   <p>Esta plataforma hace uso de capas de información pública provenientes de otras instancias o dependencias gubernamentales y externas. Estas se incluyen única y exclusivamente como marco de referencia geoespacial, por lo que su precisión y actualización dependen de sus fuentes originales.</p>
+
+
+
+   <h5>Uso de la información</h5>
+
+
+
+   <p>Este sitio y la información que contiene son de carácter meramente informativo.</p>
+
+
+
+   <h5>Responsabilidad</h5>
+
+
+
+   <p>El uso, interpretación de los datos, cálculos, análisis de geoprocesamiento y documentos generados por las herramientas de esta plataforma son responsabilidad exclusiva del usuario. La CONANP no se hace responsable por omisiones, errores de interpretación o por la toma de decisiones derivadas del uso de este geovisor.</p>
+
+
+
+   <div style="margin-top:1rem; padding:0.75rem; background:var(--bg-glass); border:1px solid var(--brand-secondary); border-radius:var(--r-sm);">
+
+
+
+    <strong>Al ingresar y utilizar esta plataforma, usted reconoce y acepta estos términos.</strong>
+
+
+
+   </div>
+
+
+
+   <div class="disclaimer-checkbox">
+
+
+
+    <label>
+
+
+
+     <input type="checkbox" id="disclaimer-dont-show"> <span>No volver a mostrar este aviso</span>
+
+
+
+    </label>
+
+
+
+   </div>
+
+
+
+  </div>
+
+
+
+  <div class="disclaimer-footer">
+
+
+
+   <button id="disclaimer-accept" class="btn-disclaimer-accept">Entendido, continuar</button>
+
+
+
+  </div>
+
+
+
+ </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- WELCOME / ONBOARDING -->
+
+
+
+<div id="welcome-overlay" class="welcome-overlay" aria-hidden="true">
+
+
+
+  <div class="welcome-card" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+
+
+
+    <div class="welcome-hero">
+
+
+
+      <div class="welcome-badge"><i class="fas fa-sparkles"></i> Nuevo · Geovisor CONANP</div>
+
+
+
+      <h1 id="welcome-title"><i class="fas fa-compass"></i> Bienvenido al Geovisor CONANP</h1>
+
+
+
+      <p>Explora las <b>Áreas Naturales Protegidas</b> y las <b>ADVC</b> de México con datos oficiales, análisis territorial y tableros interactivos. Esta guía rápida te muestra lo esencial en menos de 2 minutos.</p>
+
+
+
+    </div>
+
+
+
+    <div class="welcome-steps">
+
+
+
+      <div class="welcome-step">
+
+
+
+        <div class="welcome-step-icon"><i class="fas fa-layer-group"></i></div>
+
+
+
+        <div><h4>1. Capas y contexto</h4><p>Activa <b>CONANP</b> (ANP, ADVC, regiones), contexto geográfico (estatal/municipal) y <b>Carga tu capa</b> local (GeoJSON, KML, SHP ZIP).</p><div class="welcome-features"><span>CONANP</span><span>Ramsar</span><span>UNESCO</span><span>KBA</span></div></div>
+
+
+
+      </div>
+
+
+
+      <div class="welcome-step">
+
+
+
+        <div class="welcome-step-icon"><i class="fas fa-magnifying-glass"></i></div>
+
+
+
+        <div><h4>2. Buscar y filtrar</h4><p>Busca por <b>nombre</b> de ANP/ADVC, filtra por <b>categoría, estado y tipo de propiedad</b> y ajusta la <b>opacidad</b> para comparar.</p><div class="welcome-features"><span>Búsqueda</span><span>Filtros</span><span>Opacidad</span></div></div>
+
+
+
+      </div>
+
+
+
+      <div class="welcome-step">
+
+
+
+        <div class="welcome-step-icon"><i class="fas fa-draw-polygon"></i></div>
+
+
+
+        <div><h4>3. Mapa y análisis</h4><p>Dibuja un <b>polígono</b> o selecciona una entidad para ejecutar <b>Análisis territorial</b>: superficie en ANP, traslapes y desglose por categoría.</p><div class="welcome-features"><span>Dibujo</span><span>Selección</span><span>Análisis</span></div></div>
+
+
+
+      </div>
+
+
+
+      <div class="welcome-step">
+
+
+
+        <div class="welcome-step-icon"><i class="fas fa-chart-line"></i></div>
+
+
+
+        <div><h4>4. Dashboard e impresión</h4><p>Consulta <b>KPIs, gráficas y tablas</b>, expórtalos en <b>PNG/JPG/CSV</b> e imprime el mapa con <b>encabezado institucional, escala y norte</b>.</p><div class="welcome-features"><span>Dashboard</span><span>Gráficas</span><span>Impresión</span></div></div>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <div class="welcome-actions">
+
+
+
+      <label><input type="checkbox" id="welcome-dont-show"> <span>No volver a mostrar</span></label>
+
+
+
+      <div class="welcome-actions-right">
+
+
+
+        <button class="btn-welcome ghost" id="welcome-skip">Omitir</button>
+
+
+
+        <button class="btn-welcome secondary" id="welcome-tour-btn"><i class="fas fa-person-chalkboard"></i> Recorrido guiado</button>
+
+
+
+        <button class="btn-welcome primary" id="welcome-enter"><i class="fas fa-arrow-right"></i> Entrar al geovisor</button>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="tour-overlay" class="tour-overlay" aria-hidden="true">
+
+
+
+  <div class="tour-spotlight" id="tour-spotlight"></div>
+
+
+
+  <div class="tour-card" role="dialog" aria-modal="true">
+
+
+
+    <div class="tour-progress"><span id="tour-current">1</span> / <span id="tour-total">7</span> · <span id="tour-progress-label">Paso</span></div>
+
+
+
+    <h3 id="tour-title"><i class="fas fa-location-dot"></i> Título</h3>
+
+
+
+    <p id="tour-text">Texto</p>
+
+
+
+    <div class="tour-actions">
+
+
+
+      <button id="tour-prev"><i class="fas fa-chevron-left"></i> Anterior</button>
+
+
+
+      <button id="tour-next" class="primary">Siguiente <i class="fas fa-chevron-right"></i></button>
+
+
+
+      <button id="tour-close" style="display:none;">Finalizar <i class="fas fa-check"></i></button>
+
+
+
+      <button id="tour-skip" style="margin-left:auto; background:transparent; border:none; color:var(--text-muted); font-size:0.7rem; cursor:pointer;">Omitir tour</button>
+
+
+
+    </div>
+
+
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- FAQ -->
+
+
+
+<div id="faq-overlay" class="faq-overlay" aria-hidden="true">
+
+
+
+  <div class="faq-modal" role="dialog" aria-modal="true" aria-labelledby="faq-title">
+
+
+
+    <div class="faq-header">
+
+
+
+      <div>
+
+
+
+        <h2 id="faq-title"><i class="fas fa-circle-question"></i> Preguntas frecuentes</h2>
+
+
+
+        <p class="faq-sub">Respuestas rápidas sobre el uso del Geovisor CONANP · Datos oficiales únicamente del grupo <b>CONANP</b></p>
+
+
+
+      </div>
+
+
+
+      <button class="close-faq" id="faq-close" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+
+
+
+    </div>
+
+
+
+    <div class="faq-controls">
+
+
+
+      <div class="faq-search"><i class="fas fa-search"></i><input id="faq-search" type="search" placeholder="Buscar en preguntas (ej. ADVC, imprimir, capa)..."></div>
+
+
+
+      <span class="faq-stats" id="faq-stats">12 preguntas</span>
+
+
+
+      <button class="btn-welcome secondary" id="faq-ask-ai" style="padding:0.38rem 0.85rem; font-size:0.7rem;"><i class="fas fa-paw"></i> Preguntar a Balam</button>
+
+
+
+    </div>
+
+
+
+    <div class="faq-body" id="faq-body">
+
+
+
+      <div class="faq-category"><i class="fas fa-database"></i> Datos y capas</div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Qué diferencia hay entre ANP y ADVC? <i class="fas fa-chevron-down"></i></button><div class="faq-a"><b>ANP</b> son Áreas Naturales Protegidas decretadas por el Gobierno Federal y administradas por CONANP. <b>ADVC</b> son Áreas Destinadas Voluntariamente a la Conservación, certificadas a petición de ejidos, comunidades, privados o gobiernos. Ambas se consultan en el grupo <b>CONANP</b>; sus atributos y simbología son distintos. Puedes activarlas de forma independiente y consultar su tabla.</div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Qué capas son oficiales de CONANP y cuáles son solo referencia? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Solo el grupo <b>CONANP</b> (ANP, ADVC, Regiones, Zonas Núcleo) es generado y validado por CONANP. Capas de <b>Contexto Geográfico</b>, Ramsar, KBA, UNESCO MAB/Patrimonio y límites estatales/municipales son marcos de referencia externos; su precisión depende de la fuente original. <span class="faq-link" data-action="tour">Ver recorrido: Capas y contexto</span></div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Por qué algunas capas no cargan o aparecen vacías? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Verifica tu conexión y que el <b>GeoServer</b> esté activo. Si abriste el visor como archivo local (<code>file://</code>) el navegador bloquea WFS por CORS; publica el visor por HTTP o HTTPS. Revisa el aviso superior “Sistema activo” y el contador de elementos por capa.</div></div>
+
+
+
+      <div class="faq-category"><i class="fas fa-sliders"></i> Búsqueda y filtros</div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Cómo busco un ANP o ADVC por nombre? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Usa el buscador superior “<b>Buscar área o polígono</b>”. Escribe al menos 2 letras; filtra solo capas CONANP visibles. Selecciona un resultado para hacer zoom y resaltar. Campos indexados: <code>nom</code>, <code>nombre</code>, <code>nom_geo</code>.</div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Cómo filtrar por categoría, estado o tipo de propiedad? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Abre el filtro <i class="fas fa-filter"></i> del grupo <b>CONANP</b>. Elige <b>atributo â†’ valores</b>. Puedes combinar filtros por capa (ej. ANP por categoría de manejo, ADVC por tipo de propiedad <b>Social/Privada/Pública</b>). Usa <b>Quitar filtros</b> para reiniciar. El mapa y el Dashboard se actualizan al vuelo.</div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Puedo cargar mi propia capa? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Sí, con <b>Cargar capa local</b>: acepta <b>GeoJSON, KML y SHP en ZIP</b> (con .shp/.shx/.dbf/.prj). Se añade arriba de las capas base, con control de <b>opacidad</b> y editor de <b>simbología</b> (color, relleno, borde). Ãšsala como <b>fuente</b> o <b>destino</b> en el Análisis territorial.</div></div>
+
+
+
+      <div class="faq-category"><i class="fas fa-draw-polygon"></i> Mapa y análisis</div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Cómo funciona el Análisis territorial? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Dibuja un <b>rectángulo/polígono</b> o selecciona una entidad (clic). El panel <b>Análisis</b> calcula <b>superficie seleccionada, % en ANP/ADVC y traslapes</b> (<code>Turf.js</code>). Define <b>Fuente</b> (lo que analizas) y <b>Destino</b> (capas CONANP). Descarga <b>PDF/CSV</b> o <b>Ver en mapa</b>. Todo es informativo, no dictamen.</div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Qué es “traslape” y “supCertSinTraslape” en ADVC? <i class="fas fa-chevron-down"></i></button><div class="faq-a"><b>Traslape</b> es la superficie de una ADVC que coincide con ANP. <b>supCertSinTraslape = supCertADVC âˆ’ traslape</b> evita doble contabilidad al sumar ANP + ADVC. El Dashboard muestra ambas métricas y el tooltip detalla <code># ADVC, ha (%)</code>.</div></div>
+
+
+
+      <div class="faq-category"><i class="fas fa-chart-line"></i> Dashboard e impresión</div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Cómo usar el Dashboard? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Pestaña <b>Dashboard</b> con <b>KPIs</b> (conteo/superficie), <b>gráficas</b> (categoría, estado, propiedad, periodo) y <b>tabla ADVC/ANP</b>. Usa <i class="fas fa-expand-alt"></i> para <b>Vista ampliada</b> y <i class="fas fa-download"></i> para exportar <b>PNG/JPG/CSV</b>. Filtros activos se reflejan en vivo.</div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Cómo imprimo o guardo el mapa como imagen/PDF? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Botón <b>Imprimir</b> (<i class="fas fa-print"></i>) en la barra del mapa. Elige <b>Imprimir vista</b> (encabezado + mapa cuadrado 132 mm + KPIs + leyenda + fuentes + disclaimer) o <b>Imprimir área</b> (dibuja rectángulo). También usa <b>Dashboard â†’ Imprimir Dashboard</b> para PDF paginado. Incluye <b>escala, norte y fecha</b>.</div></div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Cómo quito o restauro gráficas del Dashboard? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Cada tarjeta tiene <i class="fas fa-times"></i> para <b>cerrar</b>. Aparece el botón <b>Restaurar gráficas</b> (<code>localStorage grafico-cerrados</code>) para recuperarlas. Ãštil para personalizar tu vista e imprimir solo lo necesario.</div></div>
+
+
+
+      <div class="faq-category"><i class="fas fa-circle-info"></i> Soporte</div>
+
+
+
+      <div class="faq-item"><button class="faq-q">¿Dónde consulto el aviso de uso y las fuentes? <i class="fas fa-chevron-down"></i></button><div class="faq-a">Abajo de cada impreso y en el panel de <b>Análisis</b> verás: “<i>Información de carácter informativo. No constituye dictamen técnico. La CONANP no se hace responsable del uso que el usuario le dé a los datos.</i>” Las <b>Fuentes</b> se listan en impresión y Dashboard. Para ANP federales, consulta la web oficial de CONANP.</div></div>
+
+
+
+    </div>
+
+
+
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- AI ASSISTANT (solo datos del sistema) -->
+
+
+
+<div id="ai-assistant" aria-live="polite">
+
+
+
+  <div id="ai-panel" class="ai-panel" style="display:none;" role="dialog" aria-modal="false" aria-labelledby="ai-title">
+
+
+
+    <div class="ai-header">
+
+
+
+      <div class="ai-header-info">
+
+
+
+        <div class="ai-avatar" style="background:linear-gradient(135deg, #d97706, #92400e);"><i class="fas fa-paw"></i></div>
+
+
+
+        <div>
+
+
+
+          <h4 id="ai-title">Balam Asistente Virtual</h4>
+
+
+
+          <small><span class="dot"></span> Asistente virtual · Balam en línea · Solo datos del sistema</small>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+      <div style="display:flex; gap:0.4rem;">
+
+
+
+        <button id="ai-voz" title="Cambiar voz" aria-label="Cambiar voz del asistente" style="display:none;"><i class="fas fa-ear-listen"></i></button>
+        <button id="ai-clear" title="Limpiar chat"><i class="fas fa-trash-can"></i></button>
+
+
+
+        <button id="ai-close" title="Cerrar"><i class="fas fa-times"></i></button>
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <div id="ai-messages" class="ai-messages"></div>
+
+
+
+    <div class="ai-suggestions" id="ai-suggestions">
+
+
+
+      <button class="ai-chip" data-q="¿Qué es una ADVC?">¿Qué es ADVC?</button>
+
+
+
+      <button class="ai-chip" data-q="¿Cómo busco un ANP por nombre?">Buscar ANP</button>
+
+
+
+      <button class="ai-chip" data-q="¿Cómo cargo mi capa?">Cargar capa</button>
+
+
+
+      <button class="ai-chip" data-q="¿Cómo hago un análisis territorial?">Análisis</button>
+
+
+
+      <button class="ai-chip" data-q="¿Cómo imprimo el mapa?">Imprimir</button>
+
+
+
+      <button class="ai-chip" data-q="¿Qué capas son oficiales?">Capas oficiales</button><button class="ai-chip" data-q="gráfica de superficie por categoría">Ver gráfica</button>
+
+
+
+    </div>
+
+
+
+    <div class="ai-input-row">
+
+
+
+      <input id="ai-input" type="text" maxlength="300" placeholder="Pregunta sobre el geovisor (ej. filtrar por propiedad)..." autocomplete="off">
+
+
+
+      <button id="ai-mic" title="Dictar por voz" aria-label="Dictar pregunta por voz"><i class="fas fa-microphone"></i></button>
+      <button id="ai-send" aria-label="Enviar"><i class="fas fa-paper-plane"></i></button>
+
+
+
+    </div>
+
+
+
+    <div class="ai-disclaimer"><i class="fas fa-paw"></i> <b>Balam es solo un asistente virtual</b>: responde solo con información del geovisor y del grupo <b>CONANP</b>. Para shapefiles/decretos/programas visita <a href="https://sig.conanp.gob.mx/" target="_blank" rel="noopener">SIG</a> y <a href="https://simec.conanp.gob.mx/" target="_blank" rel="noopener">SIMEC</a>.</div>
+
+
+
+  </div>
+
+
+
+  <button id="ai-toggle" class="has-notification" title="Hablar con Balam · Asistente Virtual" aria-label="Hablar con Balam"><i class="fas fa-paw"></i></button>
+
+
+
+</div>
+
+
+
+
+
+
+
+  <script src="assets/js/config.js?v=20261004"></script>
+<script src="assets/js/app.js?v=20261004"></script>
+<script src="assets/js/features.js?v=20261004"></script>
+<script src="assets/js/metadata.js?v=20261004"></script>
+<script src="assets/js/disclaimer.js?v=20261004"></script>
+<script type="module" src="assets/js/main.js?v=20261004"></script>
+</body>
+
+
+
+</html>
+
+
+
