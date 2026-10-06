@@ -1239,7 +1239,7 @@ function switchTab(tabId){
  const gCount=document.getElementById('grafico-anp-conteo');
  const gArea=document.getElementById('grafico-anp-superficie');
  const gAdvc=document.getElementById('grafico-advc');
- gCount.style.display='none';gArea.style.display='none';gAdvc.style.display='none';dashboardContainer.style.display='none';try{var _ip=document.getElementById('seccion-incendios');if(_ip)_ip.classList.remove('visible');var _hp=document.getElementById('seccion-huracanes');if(_hp)_hp.classList.remove('visible');if(typeof limpiarIncendios==='function')limpiarIncendios();if(typeof limpiarHuracanes==='function')limpiarHuracanes();}catch(e){}
+ gCount.style.display='none';gArea.style.display='none';gAdvc.style.display='none';dashboardContainer.style.display='none';try{var _ip=document.getElementById('seccion-incendios');if(_ip)_ip.classList.remove('visible');var _hp=document.getElementById('seccion-huracanes');if(_hp)_hp.classList.remove('visible');if(tabId!=='incendios'&&typeof limpiarIncendios==='function')limpiarIncendios();if(tabId!=='huracanes'&&typeof limpiarHuracanes==='function')limpiarHuracanes();}catch(e){}
  const mapEl=document.getElementById('map');
  if(mapEl.parentElement===mapDashboardContainer){mapOriginalContainer.appendChild(mapEl);setTimeout(()=>map.invalidateSize(),100);}
   if(tabId==='general'){if(!gCount.classList.contains('grafico-cerrado'))gCount.style.display='block';if(!gArea.classList.contains('grafico-cerrado'))gArea.style.display='block';gAdvc.classList.add('grafico-oculto');actualizarGraficosAnp();actualizarContador();}
