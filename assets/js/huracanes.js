@@ -32,7 +32,7 @@ function crearGibsTile(layer, dias) {
   return L.tileLayer(GIBS_BASE + layer + '/default/' + gibsFecha(dias) + '/' + GIBS_TMS + '/{z}/{y}/{x}.jpg', {
     attribution: 'NASA GIBS / EOSDIS · ' + layer,
     maxZoom: 9, bounds: [[-85.0511,-180],[85.0511,180]],
-    crossOrigin: true, opacity: 0.92, className: 'gibs-viirs-huracan'
+    crossOrigin: true, opacity: 0.92, className: 'gibs-viirs-huracan', pane: 'gibsPane'
   });
 }
 
@@ -410,8 +410,8 @@ function initHuracanes() {
   huracanesVisible = true;
 
   if (!huracanesLayerVIIRS) {
-    huracanesLayerVIIRS = crearCapaVIIRS(1);
-    huracanesLayerVIIRS.addTo(map);
+    huracanesLayerVIIRS = crearCapaVIIRS(2);
+    try{ if(!map.getPane("gibsPane")){ map.createPane("gibsPane"); map.getPane("gibsPane").style.zIndex = 450; map.getPane("gibsPane").style.pointerEvents = "none"; } }catch(e){} huracanesLayerVIIRS.addTo(map);
   }
 
   var el = document.getElementById('huracanes-info');

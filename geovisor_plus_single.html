@@ -4458,6 +4458,76 @@ function placeholderCanvasSquare(size, text){
   ctx.fillText(text||'[Mapa no disponible]', size/2, size/2);
   return c;
 }
+
+// Capturar mapa recortado a un área geográfica específica (ej. rectángulo ANP)
+async function capturarMapaRecortado(bounds) {
+  if (!bounds || !bounds.isValid) return null;
+  try {
+    // Capturar el mapa completo
+    const target = map.getContainer();
+    const timeout = (ms, msg) => new Promise((_, rej) => setTimeout(() => rej(new Error(msg)), ms));
+
+    var canvas = null;
+    // html2canvas (prioridad)
+    try {
+      canvas = await Promise.race([
+        html2canvas(target, { useCORS: true, allowTaint: true, backgroundColor: null, scale: 2, logging: false, imageTimeout: 0 }),
+        timeout(5000, 'html2canvas timeout')
+      ]);
+    } catch (e) { console.warn('capturarMapaRecortado html2canvas fallo', e); }
+
+    if (!canvas) {
+      try {
+        canvas = await Promise.race([
+          domtoimage.toCanvas(target, { bgcolor: null }),
+          timeout(4000, 'domtoimage timeout')
+        ]);
+      } catch (e) { console.warn('capturarMapaRecortado domtoimage fallo', e); }
+    }
+
+    if (!canvas) return placeholderDataURLSquare('Error captura');
+
+    // Calcular pixel bounds del área geográfica
+    var nw = bounds.getNorthWest();
+    var se = bounds.getSouthEast();
+    var topLeft = map.latLngToContainerPoint(nw);
+    var bottomRight = map.latLngToContainerPoint(se);
+
+    // Escala de captura (html2canvas scale:2 = factor 2)
+    var scaleFactor = 2;
+    var px = Math.max(0, Math.round(topLeft.x * scaleFactor));
+    var py = Math.max(0, Math.round(topLeft.y * scaleFactor));
+    var pw = Math.min(canvas.width - px, Math.round((bottomRight.x - topLeft.x) * scaleFactor));
+    var ph = Math.min(canvas.height - py, Math.round((bottomRight.y - topLeft.y) * scaleFactor));
+
+    if (pw < 10 || ph < 10) {
+      console.warn('capturarMapaRecortado: area demasiado pequena', px, py, pw, ph);
+      return canvas.toDataURL('image/png');
+    }
+
+    // Añadir margen (10%)
+    var margin = Math.round(Math.min(pw, ph) * 0.10);
+    px = Math.max(0, px - margin);
+    py = Math.max(0, py - margin);
+    pw = Math.min(canvas.width - px, pw + margin * 2);
+    ph = Math.min(canvas.height - py, ph + margin * 2);
+
+    // Recortar al área del rectángulo
+    var cropped = document.createElement('canvas');
+    cropped.width = pw;
+    cropped.height = ph;
+    var cctx = cropped.getContext('2d');
+    cctx.drawImage(canvas, px, py, pw, ph, 0, 0, pw, ph);
+
+    // Aplicar letterbox cuadrado al recorte
+    return canvasToSquareDataURL(cropped);
+  } catch (e) {
+    console.warn('capturarMapaRecortado error', e);
+    return null;
+  }
+}
+window.capturarMapaRecortado = capturarMapaRecortado;
+
 function placeholderDataURLSquare(text){
   return placeholderCanvasSquare(640, text).toDataURL('image/png');
 }
@@ -8262,8 +8332,14 @@ async function imprimirGeneralADVC(rectBounds){
   const tiposTxt=Object.entries(porTipo).sort((a,c)=>c[1]-a[1]).map(([t,n])=>`${n.toLocaleString('es-MX')} ${t}`).join(' · ')||'Sin elementos';
   if(printAreaLayer){ try{ map.removeLayer(printAreaLayer); }catch(e){} printAreaLayer=null; await esperarVistaEstable(2500); }
   let mapImg=null;
-  try{ mapImg=await capturarMapa(map.getContainer()); if(!mapImg) throw new Error('null'); }
-  catch(e){ mapImg=placeholderDataURLSquare('Error capturando mapa'); }
+  if(rectBounds){
+    // Recortar la captura al área del rectángulo dibujado
+    try{ mapImg=await capturarMapaRecortado(rectBounds); }catch(e){}
+  }
+  if(!mapImg){
+    try{ mapImg=await capturarMapa(map.getContainer()); if(!mapImg) throw new Error('null'); }
+    catch(e){ mapImg=placeholderDataURLSquare('Error capturando mapa'); }
+  }
   const impZoom=map.getZoom(), impCenter=map.getCenter();
   let impPxW=800; try{ impPxW=map.getContainer().clientWidth||800; }catch(e){}
   try{ map.setView(vista0.center,vista0.zoom); }catch(e){}
@@ -10557,7 +10633,7 @@ function crearGibsTile(layer, dias) {
   return L.tileLayer(GIBS_BASE + layer + '/default/' + gibsFecha(dias) + '/' + GIBS_TMS + '/{z}/{y}/{x}.jpg', {
     attribution: 'NASA GIBS / EOSDIS · ' + layer,
     maxZoom: 9, bounds: [[-85.0511,-180],[85.0511,180]],
-    crossOrigin: true, opacity: 0.92, className: 'gibs-viirs-huracan'
+    crossOrigin: true, opacity: 0.92, className: 'gibs-viirs-huracan', pane: 'gibsPane'
   });
 }
 
@@ -10935,8 +11011,8 @@ function initHuracanes() {
   huracanesVisible = true;
 
   if (!huracanesLayerVIIRS) {
-    huracanesLayerVIIRS = crearCapaVIIRS(1);
-    huracanesLayerVIIRS.addTo(map);
+    huracanesLayerVIIRS = crearCapaVIIRS(2);
+    try{ if(!map.getPane("gibsPane")){ map.createPane("gibsPane"); map.getPane("gibsPane").style.zIndex = 450; map.getPane("gibsPane").style.pointerEvents = "none"; } }catch(e){} huracanesLayerVIIRS.addTo(map);
   }
 
   var el = document.getElementById('huracanes-info');
