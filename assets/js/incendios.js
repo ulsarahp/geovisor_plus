@@ -13,7 +13,7 @@ let incendiosInitTimer = null;
 
 // ⚠️ CONFIGURACIÓN: Inserta aquí tu MAP_KEY de NASA FIRMS
 // Obtén uno GRATIS en: https://firms.modaps.eosdis.nasa.gov/api/map_key/
-const FIRMS_MAP_KEY = ''; // ← PONER TU MAP_KEY AQUÍ
+const FIRMS_MAP_KEY = '042487e643b9eadb32961344afe64505'; // ← PONER TU MAP_KEY AQUÍ
 
 // Bounding box México
 const MX_BBOX = { w: -118.4, s: 14.5, e: -86.7, n: 32.8 };
