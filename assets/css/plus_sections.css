@@ -1,0 +1,44 @@
+  /* ================================================================
+    INCENDIOS + HURACANES — Estilos
+  ================================================================ */
+  .incendios-kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:0.4rem; margin-bottom:0.4rem; }
+  .incendios-kpi { background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-sm); padding:0.45rem 0.5rem; }
+  .incendios-kpi .kpi-lbl { font-size:0.52rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.4px; }
+  .incendios-kpi .kpi-val { font-family:'Space Grotesk',sans-serif; font-size:1.15rem; font-weight:800; color:var(--text-primary); line-height:1.1; }
+
+  .firms-point { filter: drop-shadow(0 0 3px rgba(255,69,0,0.5)); }
+  .firms-wms-layer { mix-blend-mode: screen; }
+
+  .incendios-controls { display:flex; gap:0.35rem; flex-wrap:wrap; margin-top:0.5rem; }
+  .incendios-controls button { padding:0.28rem 0.7rem; border-radius:var(--r-full); border:1px solid var(--border-subtle); background:var(--bg-glass); color:var(--text-primary); font-size:0.65rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:all var(--t-fast) var(--ease); }
+  .incendios-controls button:hover { background:var(--bg-glass-hover); }
+  .incendios-controls button.active { background:linear-gradient(135deg,#FF4500,#8B0000); color:#fff; border-color:transparent; }
+
+  .huracan-stat { background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-sm); padding:0.4rem 0.5rem; }
+  .huracan-stat .stat-lbl { font-size:0.52rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.3px; }
+  .huracan-stat .stat-val { font-family:'Space Grotesk',sans-serif; font-size:0.85rem; font-weight:800; color:var(--text-primary); line-height:1.2; }
+
+  .huracan-ojo { filter: drop-shadow(0 0 6px rgba(255,69,0,0.6)); animation: huracanPulse 2s ease infinite; }
+  @keyframes huracanPulse { 0%,100%{ box-shadow:0 0 0 0 rgba(255,69,0,0.4);} 50%{ box-shadow:0 0 0 12px rgba(255,69,0,0);} }
+  .gibs-viirs-huracan { image-rendering: auto; }
+  .huracan-track { filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); }
+
+  .tab-incendios { color:#FF4500 !important; }
+  .tab-incendios.active { background:linear-gradient(135deg,#FF4500,#8B0000) !important; border-color:#FF4500 !important; }
+  .tab-huracanes { color:#4682B4 !important; }
+  .tab-huracanes.active { background:linear-gradient(135deg,#4682B4,#1a3a5c) !important; border-color:#4682B4 !important; }
+
+  .seccion-panel-incendios, .seccion-panel-huracanes {
+    display:none; padding:0.6rem 0.7rem; background:var(--bg-glass);
+    border:1px solid var(--border-subtle); border-radius:var(--r-md);
+    margin-top:0.5rem; flex-direction:column; gap:0.5rem;
+  }
+  .seccion-panel-incendios.visible, .seccion-panel-huracanes.visible { display:flex; }
+
+  .seccion-titulo { font-family:'Space Grotesk',sans-serif; font-size:0.72rem; font-weight:800; color:var(--text-primary); display:flex; align-items:center; gap:0.4rem; text-transform:uppercase; letter-spacing:0.3px; }
+  .seccion-titulo i { font-size:0.78rem; }
+  .seccion-titulo.incendios i { color:#FF4500; }
+  .seccion-titulo.huracanes i { color:#4682B4; }
+
+  .firms-legend { display:flex; gap:0.6rem; font-size:0.58rem; color:var(--text-secondary); align-items:center; flex-wrap:wrap; }
+  .firms-legend .leg-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }

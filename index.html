@@ -18,11 +18,11 @@
 
 
 
- <title>Geovisor CONANP · Sistema de Información Geográfica</title>
+ <title>Geovisor Plus CONANP · Sistema de Información Geográfica</title>
 
 
 
- <meta name="description" content="Geovisor CONANP - Sistema de Información Geográfica para Áreas Naturales Protegidas y ADVC de México." />
+ <meta name="description" content="Geovisor Plus CONANP - Sistema de Información Geográfica para Áreas Naturales Protegidas y ADVC de México." />
 
 
 
@@ -102,7 +102,8 @@
 
 
 
-   <link rel="stylesheet" href="assets/css/app.css?v=20261004" />
+   <link rel="stylesheet" href="assets/css/plus_sections.css" />
+  <link rel="stylesheet" href="assets/css/app.css?v=20261004" />
 
 
 
@@ -138,7 +139,7 @@
 
 
 
-   <div class="header-title-main">Geovisor CONANP</div>
+   <div class="header-title-main">Geovisor Plus CONANP</div>
 
 
 
@@ -191,6 +192,8 @@
 
 
   <button class="tab" data-tab="dashboard"><i class="fas fa-chart-line"></i>Dashboard</button>
+          <button class="tab tab-incendios" data-tab="incendios"><i class="fas fa-fire"></i> Incendios</button>
+          <button class="tab tab-huracanes" data-tab="huracanes"><i class="fas fa-hurricane"></i> Huracanes</button>
 
 
 
@@ -414,7 +417,34 @@
 
 
 
-   <div id="grafico-anp-conteo" class="grafico-container">
+   <!-- INCENDIOS PANEL -->
+    <div class="seccion-panel-incendios" id="seccion-incendios">
+      <div class="seccion-titulo incendios"><i class="fas fa-fire"></i> Alerta Temprana Incendios</div>
+      <div class="incendios-controls">
+        <button id="btn-fires-24h" class="active" onclick="cambiarRangoIncendios(1)">24h</button>
+        <button id="btn-fires-48h" onclick="cambiarRangoIncendios(2)">48h</button>
+        <button id="btn-fires-7d" onclick="cambiarRangoIncendios(7)">7 días</button>
+      </div>
+      <div id="incendios-stats"></div>
+      <div class="firms-legend">
+        <span><span class="leg-dot" style="background:#FF0000;"></span> Alta confianza</span>
+        <span><span class="leg-dot" style="background:#FF8C00;"></span> Nominal</span>
+        <span><span class="leg-dot" style="background:#FFD700;"></span> Baja</span>
+      </div>
+    </div>
+
+    <!-- HURACANES PANEL -->
+    <div class="seccion-panel-huracanes" id="seccion-huracanes">
+      <div class="seccion-titulo huracanes"><i class="fas fa-hurricane"></i> Monitor de Huracanes</div>
+      <div class="incendios-controls">
+        <button id="btn-viirs-today" class="active" onclick="actualizarVIIRSFecha(0)">Hoy</button>
+        <button id="btn-viirs-1d" onclick="actualizarVIIRSFecha(1)">Ayer</button>
+        <button id="btn-viirs-2d" onclick="actualizarVIIRSFecha(2)">2 días</button>
+      </div>
+      <div id="huracanes-info"></div>
+    </div>
+
+    <div id="grafico-anp-conteo" class="grafico-container">
 
 
 
@@ -1684,7 +1714,7 @@
 
 
 
-    <h1 style="margin:0; font-size:12pt; color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.1;">Geovisor CONANP</h1>
+    <h1 style="margin:0; font-size:12pt; color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.1;">Geovisor Plus CONANP</h1>
 
 
 
@@ -1898,7 +1928,7 @@
 
 
 
-   <h2><i class="fas fa-info-circle"></i> Bienvenido al Geovisor CONANP</h2>
+   <h2><i class="fas fa-info-circle"></i> Bienvenido al Geovisor Plus CONANP</h2>
 
 
 
@@ -2034,11 +2064,11 @@
 
 
 
-      <div class="welcome-badge"><i class="fas fa-sparkles"></i> Nuevo · Geovisor CONANP</div>
+      <div class="welcome-badge"><i class="fas fa-sparkles"></i> Nuevo · Geovisor Plus CONANP</div>
 
 
 
-      <h1 id="welcome-title"><i class="fas fa-compass"></i> Bienvenido al Geovisor CONANP</h1>
+      <h1 id="welcome-title"><i class="fas fa-compass"></i> Bienvenido al Geovisor Plus CONANP</h1>
 
 
 
@@ -2250,7 +2280,7 @@
 
 
 
-        <p class="faq-sub">Respuestas rápidas sobre el uso del Geovisor CONANP · Datos oficiales únicamente del grupo <b>CONANP</b></p>
+        <p class="faq-sub">Respuestas rápidas sobre el uso del Geovisor Plus CONANP · Datos oficiales únicamente del grupo <b>CONANP</b></p>
 
 
 
@@ -2515,7 +2545,9 @@
   <script src="assets/js/config.js?v=20261004"></script>
 <script src="assets/js/app.js?v=20261004"></script>
 <script src="assets/js/features.js?v=20261004"></script>
-<script src="assets/js/metadata.js?v=20261004"></script>
+<script src="assets/js/incendios.js"></script>
+<script src="assets/js/huracanes.js"></script>
+  <script src="assets/js/metadata.js?v=20261004"></script>
 <script src="assets/js/disclaimer.js?v=20261004"></script>
 <script type="module" src="assets/js/main.js?v=20261004"></script>
 </body>

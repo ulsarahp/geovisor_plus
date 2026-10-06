@@ -1239,13 +1239,31 @@ function switchTab(tabId){
  const gCount=document.getElementById('grafico-anp-conteo');
  const gArea=document.getElementById('grafico-anp-superficie');
  const gAdvc=document.getElementById('grafico-advc');
- gCount.style.display='none';gArea.style.display='none';gAdvc.style.display='none';dashboardContainer.style.display='none';
+ gCount.style.display='none';gArea.style.display='none';gAdvc.style.display='none';dashboardContainer.style.display='none';try{var _ip=document.getElementById('seccion-incendios');if(_ip)_ip.classList.remove('visible');var _hp=document.getElementById('seccion-huracanes');if(_hp)_hp.classList.remove('visible');if(typeof limpiarIncendios==='function')limpiarIncendios();if(typeof limpiarHuracanes==='function')limpiarHuracanes();}catch(e){}
  const mapEl=document.getElementById('map');
  if(mapEl.parentElement===mapDashboardContainer){mapOriginalContainer.appendChild(mapEl);setTimeout(()=>map.invalidateSize(),100);}
   if(tabId==='general'){if(!gCount.classList.contains('grafico-cerrado'))gCount.style.display='block';if(!gArea.classList.contains('grafico-cerrado'))gArea.style.display='block';gAdvc.classList.add('grafico-oculto');actualizarGraficosAnp();actualizarContador();}
   else if(tabId==='advc'){if(!gAdvc.classList.contains('grafico-cerrado')){gAdvc.classList.remove('grafico-oculto');gAdvc.style.display='block';}actualizarGraficoAdvc();actualizarContador();}
  else if(tabId==='dashboard'){dashboardContainer.style.display='block';if(!mapDashboardContainer.contains(mapEl)){mapDashboardContainer.appendChild(mapEl);setTimeout(()=>{map.invalidateSize();map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);},150);}else{map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);}actualizarDashboard();}
- if(tabId!=='dashboard')map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);
+ else if(tabId==='incendios'){
+    // Activar sección incendios
+    var incPanel=document.getElementById('seccion-incendios');
+    if(incPanel) incPanel.classList.add('visible');
+    var hurPanel=document.getElementById('seccion-huracanes');
+    if(hurPanel) hurPanel.classList.remove('visible');
+    if(typeof initIncendios==='function') initIncendios();
+    gCount.style.display='none'; gArea.style.display='none'; gAdvc.style.display='none';
+  }
+  else if(tabId==='huracanes'){
+    // Activar sección huracanes
+    var hurPanel2=document.getElementById('seccion-huracanes');
+    if(hurPanel2) hurPanel2.classList.add('visible');
+    var incPanel2=document.getElementById('seccion-incendios');
+    if(incPanel2) incPanel2.classList.remove('visible');
+    if(typeof initHuracanes==='function') initHuracanes();
+    gCount.style.display='none'; gArea.style.display='none'; gAdvc.style.display='none';
+  }
+  if(tabId!=='dashboard')map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);
  temaActual=tabId;aplicarFiltro(tabId==='advc'?'advc':'general');
  document.body.classList.toggle('dashboard-active', tabId==='dashboard');
  if(tabId!=='dashboard'){dashboardFilters={cat:null,estado:null,propiedad:null};applyDashboardFilterToMap();updateFilterBar();resaltarTemaEnMapa(tabId==='advc'?'advc':'general');}
