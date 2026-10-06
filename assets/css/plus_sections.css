@@ -45,3 +45,10 @@
 
   .huracan-cone { fill-opacity: 0.06; stroke-opacity: 0.4; }
   .huracan-track { filter: drop-shadow(0 1px 3px rgba(255,69,0,0.3)); }
+
+  .huracan-cone { fill-opacity:0.06; stroke-opacity:0.4; }
+  .huracan-track { filter: drop-shadow(0 1px 3px rgba(255,69,0,0.3)); }
+  .gibs-viirs-huracan { image-rendering:auto; }
+  .seccion-panel-huracanes .incendios-kpi { padding:0.35rem 0.4rem; }
+  .seccion-panel-huracanes .incendios-kpi .kpi-val { font-size:0.85rem; }
+  .huracan-anp-row { display:flex; align-items:center; gap:0.35rem; padding:0.2rem 0.3rem; margin-bottom:0.12rem; background:var(--bg-glass); border-radius:4px; border-left:3px solid transparent; font-size:0.6rem; }

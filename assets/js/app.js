@@ -1246,23 +1246,27 @@ function switchTab(tabId){
   else if(tabId==='advc'){if(!gAdvc.classList.contains('grafico-cerrado')){gAdvc.classList.remove('grafico-oculto');gAdvc.style.display='block';}actualizarGraficoAdvc();actualizarContador();}
  else if(tabId==='dashboard'){dashboardContainer.style.display='block';if(!mapDashboardContainer.contains(mapEl)){mapDashboardContainer.appendChild(mapEl);setTimeout(()=>{map.invalidateSize();map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);},150);}else{map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);}actualizarDashboard();}
  else if(tabId==='incendios'){
-    // Activar sección incendios
     var incPanel=document.getElementById('seccion-incendios');
     if(incPanel) incPanel.classList.add('visible');
     var hurPanel=document.getElementById('seccion-huracanes');
     if(hurPanel) hurPanel.classList.remove('visible');
+    var cl1=document.getElementById('capa-list');
+    if(cl1){ cl1.style.display='none'; cl1.style.flex='0 0 auto'; }
     if(typeof initIncendios==='function') initIncendios();
     gCount.style.display='none'; gArea.style.display='none'; gAdvc.style.display='none';
   }
   else if(tabId==='huracanes'){
-    // Activar sección huracanes
     var hurPanel2=document.getElementById('seccion-huracanes');
     if(hurPanel2) hurPanel2.classList.add('visible');
     var incPanel2=document.getElementById('seccion-incendios');
     if(incPanel2) incPanel2.classList.remove('visible');
+    var cl2=document.getElementById('capa-list');
+    if(cl2){ cl2.style.display='none'; cl2.style.flex='0 0 auto'; }
     if(typeof initHuracanes==='function') initHuracanes();
     gCount.style.display='none'; gArea.style.display='none'; gAdvc.style.display='none';
   }
+  var _cl=document.getElementById('capa-list');
+  if(_cl && tabId!=='incendios' && tabId!=='huracanes'){ _cl.style.display=''; _cl.style.flex=''; }
   if(tabId!=='dashboard')map.fitBounds([[MEXICO_BOUNDS.south,MEXICO_BOUNDS.west],[MEXICO_BOUNDS.north,MEXICO_BOUNDS.east]]);
  temaActual=tabId;aplicarFiltro(tabId==='advc'?'advc':'general');
  document.body.classList.toggle('dashboard-active', tabId==='dashboard');
