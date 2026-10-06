@@ -23,8 +23,6 @@ const RIESGO = [
   { key:'muy_bajo',  label:'Muy Bajo',  color:'#00AA00', bg:'#00AA00', text:'#fff', desc:'Riesgo mínimo' }
 ];
 
-const GIBS_BASE = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/';
-const GIBS_TMS = 'GoogleMapsCompatible_Level9';
 
 function gibsFecha(d) { var dt = new Date(); dt.setDate(dt.getDate()-(d||1)); return dt.toISOString().split('T')[0]; }
 
