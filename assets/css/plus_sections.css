@@ -42,3 +42,6 @@
 
   .firms-legend { display:flex; gap:0.6rem; font-size:0.58rem; color:var(--text-secondary); align-items:center; flex-wrap:wrap; }
   .firms-legend .leg-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  .huracan-cone { fill-opacity: 0.06; stroke-opacity: 0.4; }
+  .huracan-track { filter: drop-shadow(0 1px 3px rgba(255,69,0,0.3)); }
