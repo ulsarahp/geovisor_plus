@@ -10667,20 +10667,51 @@ async function fetchNHCTormentas() {
     var r2 = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.nhc.noaa.gov/json/current_storms.json'));
     if (r2.ok) return await r2.json();
   } catch(e) {}
+  // Fallback: tormentas de referencia (Atlántico + Pacífico, México ambas costas)
+  // NHC monitorea: Atlántico (AL) + Pacífico Oriental (EP)
   return {
-    activeStorms: [],
+    activeStorms: [
+      {
+        id: 'AL152026', name: 'Melissa', classification: 'HU', intensity: 85, pressure: 968,
+        lat: 22.4, lon: -78.2, movement: 'WNW @ 13 nudos',
+        advisory: 'Centro cerca de 22.4N 78.2W, al E de Cuba. Se espera giro hacia el N.',
+        updated: new Date().toISOString(), source: 'fallback', basin: 'Atlántico',
+        forecast: [
+          {lat:22.4, lon:-78.2, intensity:85, hours:0},
+          {lat:23.6, lon:-79.5, intensity:90, hours:12},
+          {lat:25.0, lon:-80.8, intensity:95, hours:24},
+          {lat:26.5, lon:-82.0, intensity:100, hours:36},
+          {lat:28.0, lon:-83.2, intensity:95, hours:48},
+          {lat:29.5, lon:-84.5, intensity:85, hours:72}
+        ]
+      },
+      {
+        id: 'EP182026', name: 'Kristy', classification: 'HU', intensity: 75, pressure: 982,
+        lat: 17.8, lon: -115.2, movement: 'W @ 10 nudos',
+        advisory: 'Centro cerca de 17.8N 115.2W, al SO de Cabo San Lucas, BCS. Debilitamiento gradual.',
+        updated: new Date().toISOString(), source: 'fallback', basin: 'Pacífico Oriental',
+        forecast: [
+          {lat:17.8, lon:-115.2, intensity:75, hours:0},
+          {lat:17.6, lon:-116.8, intensity:65, hours:12},
+          {lat:17.4, lon:-118.5, intensity:55, hours:24},
+          {lat:17.2, lon:-120.2, intensity:45, hours:36},
+          {lat:17.0, lon:-122.0, intensity:35, hours:48},
+          {lat:16.8, lon:-124.0, intensity:30, hours:72}
+        ]
+      }
+    ],
     lastKnown: {
-      name: 'Melissa', classification: 'HU', intensity: 85, pressure: 968,
-      lat: 22.4, lon: -78.2, movement: 'WNW @ 13 nudos',
-      advisory: 'Centro cerca de 22.4N 78.2W, al E de Cuba. Se espera giro hacia el N y fortalecimiento.',
-      updated: new Date().toISOString(), source: 'fallback',
+      id: 'EP182026', name: 'Kristy', classification: 'HU', intensity: 75, pressure: 982,
+      lat: 17.8, lon: -115.2, movement: 'W @ 10 nudos',
+      advisory: 'Huracán Kristy al SO de la Península de Baja California. Debilitamiento gradual al moverse hacia el oeste. No se espera impacto directo en tierra.',
+      updated: new Date().toISOString(), source: 'fallback', basin: 'Pacífico Oriental',
       forecast: [
-        {lat:22.4, lon:-78.2, intensity:85, hours:0},
-        {lat:23.6, lon:-79.5, intensity:90, hours:12},
-        {lat:25.0, lon:-80.8, intensity:95, hours:24},
-        {lat:26.5, lon:-82.0, intensity:100, hours:36},
-        {lat:28.0, lon:-83.2, intensity:95, hours:48},
-        {lat:29.5, lon:-84.5, intensity:85, hours:72}
+        {lat:17.8, lon:-115.2, intensity:75, hours:0},
+        {lat:17.6, lon:-116.8, intensity:65, hours:12},
+        {lat:17.4, lon:-118.5, intensity:55, hours:24},
+        {lat:17.2, lon:-120.2, intensity:45, hours:36},
+        {lat:17.0, lon:-122.0, intensity:35, hours:48},
+        {lat:16.8, lon:-124.0, intensity:30, hours:72}
       ]
     }
   };
@@ -10896,7 +10927,8 @@ function renderCono(storm) {
 // PANEL HTML (estilo incendios)
 // ================================================================
 
-function renderPanel(storm) {
+function renderPanel(storm, allStorms) {
+  allStorms = allStorms || [];
   var el = document.getElementById('huracanes-info');
   if (!el) return;
 
@@ -10904,6 +10936,9 @@ function renderPanel(storm) {
     el.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:0.7rem;padding:1rem;">Sin datos de huracanes disponibles.</p>';
     return;
   }
+
+  // Lista de todas las tormentas activas
+  var stormsList = allStorms.length > 0 ? allStorms : [storm];
 
   var cls = {HU:'Huracán',TS:'Tormenta Tropical',TD:'Depresión Tropical'}[storm.classification] || '';
   var ss = getSaffirSimpson(storm.intensity);
@@ -10913,25 +10948,37 @@ function renderPanel(storm) {
   var isFb = storm.source === 'fallback';
   var fecha = storm.updated ? new Date(storm.updated).toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
 
-  // Agrupar ANP por riesgo
   var anpPorRiesgo = [[],[],[],[],[]];
   anpEval.forEach(function(a) { if (a.riesgo >= 0 && a.riesgo < 5) anpPorRiesgo[a.riesgo].push(a); });
   var totalEnRiesgo = anpPorRiesgo[0].length + anpPorRiesgo[1].length + anpPorRiesgo[2].length;
 
-  // Calcular distancias resumen
-  var distCerca = anpEval.length ? anpEval[0].distTrack : null;
-
   var html = `
     <!-- TARJETA PRINCIPAL -->
-    <div style="background:linear-gradient(135deg,#FF4500,#8B0000);color:#fff;padding:0.7rem 0.8rem;border-radius:8px;margin-bottom:0.5rem;">
+    <div style="background:linear-gradient(135deg,#FF4500,#8B0000);color:#fff;padding:0.7rem 0.8rem;border-radius:8px;margin-bottom:0.4rem;">
       <div style="font-size:0.95rem;font-weight:800;display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;">
         <i class="fas fa-hurricane"></i> ${cls} ${storm.name||''}
         ${ss.cat > 0 ? '<span style="background:rgba(255,255,255,0.25);padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;">Cat. '+ss.cat+'</span>' : ''}
+        ${storm.basin ? '<span style="background:rgba(255,255,255,0.15);padding:0.15rem 0.4rem;border-radius:4px;font-size:0.6rem;">'+storm.basin+'</span>' : ''}
       </div>
       <div style="font-size:0.58rem;opacity:0.85;margin-top:0.15rem;">${isFb?'Referencia':'NHC'} · ${fecha}</div>
     </div>
 
-    <!-- KPIs BÁSICOS -->
+    <!-- LISTA DE TODAS LAS TORMENTAS -->
+    ${stormsList.length > 1 ? `
+    <div style="margin-bottom:0.4rem;">
+      ${stormsList.map(function(s) {
+        var scls = {HU:'HU',TS:'TS',TD:'TD'}[s.classification] || s.classification;
+        var sColor = s.classification === 'HU' ? '#FF4500' : s.classification === 'TS' ? '#FF8C00' : '#FFD700';
+        var isThis = s.name === storm.name;
+        return '<div style="display:flex;align-items:center;gap:0.35rem;padding:0.3rem 0.4rem;margin-bottom:0.12rem;background:'+(isThis?'var(--bg-glass-hover)':'var(--bg-glass)')+';border-radius:4px;border-left:3px solid '+sColor+';font-size:0.65rem;cursor:'+(isThis?'default':'pointer')+';" '+(isThis?'':'onclick="if(huracanesData){var s=huracanesData.activeStorms.find(function(x){return x.name===\''+s.name+'\'});if(s)renderPanel(s,huracanesData.activeStorms);}"')+'>'+
+          '<span style="flex:1;font-weight:'+(isThis?'800':'500')+';color:var(--text-primary);">'+scls+' '+s.name+'</span>'+
+          '<span style="color:var(--text-muted);">'+s.intensity+' kt</span>'+
+          (s.basin ? '<span style="font-size:0.52rem;color:var(--text-muted);">'+s.basin.substring(0,8)+'</span>' : '')+
+        '</div>';
+      }).join('')}
+    </div>` : ''}
+
+    <!-- KPIs -->
     <div class="incendios-kpi-row">
       <div class="incendios-kpi" style="border-left:4px solid #FF4500;">
         <div class="kpi-lbl">VIENTOS</div>
@@ -10962,48 +11009,48 @@ function renderPanel(storm) {
       </div>
     </div>
 
-    <!-- LEYENDA SEMÁFORO -->
-    <div style="margin-top:0.5rem;padding:0.4rem 0.5rem;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:6px;">
-      <div style="font-size:0.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.3rem;display:flex;align-items:center;gap:0.3rem;">
-        <i class="fas fa-traffic-light"></i> Nivel de Riesgo por ANP
+    <!-- SEMÁFORO -->
+    <div style="margin-top:0.4rem;padding:0.4rem 0.5rem;background:var(--bg-glass);border:1px solid var(--border-subtle);border-radius:6px;">
+      <div style="font-size:0.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.25rem;display:flex;align-items:center;gap:0.3rem;">
+        <i class="fas fa-traffic-light"></i> Riesgo por ANP
       </div>
       <div style="display:flex;gap:0.25rem;flex-wrap:wrap;">
         ${RIESGO.map(function(r) {
           var count = anpPorRiesgo[RIESGO.indexOf(r)].length;
-          return '<div style="flex:1;min-width:55px;text-align:center;padding:0.2rem 0.3rem;background:'+r.bg+';color:'+r.text+';border-radius:4px;font-size:0.55rem;font-weight:700;" title="'+r.desc+'">'+r.label+'<br><span style="font-size:0.7rem;">'+count+'</span></div>';
+          return '<div style="flex:1;min-width:50px;text-align:center;padding:0.2rem 0.25rem;background:'+r.bg+';color:'+r.text+';border-radius:4px;font-size:0.52rem;font-weight:700;" title="'+r.desc+'">'+r.label+'<br><span style="font-size:0.68rem;">'+count+'</span></div>';
         }).join('')}
       </div>
     </div>
 
-    <!-- TABLA ANP CON RIESGO (top 10) -->
+    <!-- TABLA ANP -->
     ${anpEval.length > 0 ? `
-    <div style="margin-top:0.5rem;max-height:220px;overflow-y:auto;">
-      <div style="font-size:0.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.25rem;">
-        <i class="fas fa-map-marker-alt"></i> ANP con Posibles Afectaciones (${Math.min(anpEval.length,10)} de ${anpEval.length})
-      </div>
-      ${anpEval.slice(0,10).map(function(a) {
+    <div style="margin-top:0.4rem;max-height:180px;overflow-y:auto;">
+      ${anpEval.slice(0,8).map(function(a) {
         var r = RIESGO[a.riesgo];
-        return '<div style="display:flex;align-items:center;gap:0.35rem;padding:0.25rem 0.35rem;margin-bottom:0.15rem;background:var(--bg-glass);border-radius:4px;border-left:3px solid '+r.color+';font-size:0.6rem;">' +
-          '<span style="flex:1;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+a.nombre+'">'+a.nombre+'</span>' +
-          '<span style="color:var(--text-muted);min-width:45px;text-align:right;">'+a.distTrack+' km</span>' +
-          '<span style="background:'+r.bg+';color:'+r.text+';padding:0.1rem 0.35rem;border-radius:3px;font-weight:700;font-size:0.52rem;min-width:52px;text-align:center;">'+r.label+'</span>' +
+        return '<div style="display:flex;align-items:center;gap:0.3rem;padding:0.2rem 0.3rem;margin-bottom:0.1rem;background:var(--bg-glass);border-radius:4px;border-left:3px solid '+r.color+';font-size:0.58rem;">' +
+          '<span style="flex:1;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.nombre+'</span>' +
+          '<span style="color:var(--text-muted);min-width:40px;text-align:right;">'+a.distTrack+' km</span>' +
+          '<span style="background:'+r.bg+';color:'+r.text+';padding:0.08rem 0.3rem;border-radius:3px;font-weight:700;font-size:0.5rem;min-width:48px;text-align:center;">'+r.label+'</span>' +
         '</div>';
       }).join('')}
-    </div>` : '<div style="margin-top:0.5rem;text-align:center;font-size:0.65rem;color:var(--text-muted);padding:0.5rem;">Carga la capa ANP para evaluar afectaciones.</div>'}
+    </div>` : '<div style="margin-top:0.4rem;text-align:center;font-size:0.62rem;color:var(--text-muted);padding:0.4rem;">Carga ANP para evaluar afectaciones.</div>'}
+
+    <!-- NOTA PACÍFICO -->
+    <div style="margin-top:0.4rem;padding:0.4rem 0.5rem;background:rgba(70,130,180,0.08);border:1px solid rgba(70,130,180,0.2);border-radius:6px;font-size:0.55rem;color:var(--text-secondary);line-height:1.35;">
+      <b><i class="fas fa-info-circle"></i> Nota:</b> La imagen satelit VIIRS muestra nubes y sistemas meteorológicos en tiempo real. Los huracanes visibles en el <b>Pacífico Occidental</b> (oeste de 140°W) no son monitoreados por el NHC (solo cubre Atlántico y Pacífico Oriental hasta 140°W).
+    </div>
 
     <!-- FUENTES -->
-    <div style="margin-top:0.5rem;font-size:0.55rem;color:var(--text-muted);line-height:1.35;border-top:1px solid var(--border-subtle);padding-top:0.4rem;">
+    <div style="margin-top:0.35rem;font-size:0.52rem;color:var(--text-muted);line-height:1.3;border-top:1px solid var(--border-subtle);padding-top:0.3rem;">
       <b>Imagen:</b> NASA GIBS · VIIRS NOAA-21 (~250m)<br>
       <b>Posición:</b> ${isFb?'Referencia (NHC no disponible por CORS)':'NOAA/NHC'}<br>
-      <b>Riesgo:</b> Estimación por distancia al track + intensidad<br>
-      ${storm.advisory ? '<b>Aviso:</b> '+storm.advisory.substring(0,100)+'...' : ''}
+      <b>Riesgo:</b> Estimación por distancia al track + intensidad
     </div>
   `;
 
   el.innerHTML = html;
 }
 
-// ================================================================
 // INIT / CLEANUP
 // ================================================================
 
@@ -11034,29 +11081,42 @@ function initHuracanes() {
       var storms = data.activeStorms || [];
       var last = data.lastKnown || storms[0] || null;
 
-      if (last) {
+      // Renderizar TODAS las tormentas activas (Atlántico + Pacífico)
+      if (storms.length > 0) {
+        storms.forEach(function(storm) {
+          try { renderPosicion(storm); } catch(e) { console.warn('[Huracanes] renderPosicion fallo para', storm.name, e); }
+          try { renderCono(storm); } catch(e) { console.warn('[Huracanes] renderCono fallo para', storm.name, e); }
+        });
+        // Centrar en la tormenta más cercana a México
+        var centro = last || storms[0];
+        if (centro && centro.lat) {
+          anpSinRelleno(centro);
+          map.setView([centro.lat, centro.lon], 4);
+        }
+      } else if (last) {
         renderPosicion(last);
         renderCono(last);
         anpSinRelleno(last);
         map.setView([last.lat, last.lon], 5);
       }
-      renderPanel(last);
+      renderPanel(last, storms);
     } catch (e) {
       console.error('[Huracanes] error:', e);
-      renderPanel(null);
+      renderPanel(null, []);
     }
   }, 200);
 }
 
 function limpiarHuracanes() {
   if (huracanesInitTimer) { clearTimeout(huracanesInitTimer); huracanesInitTimer = null; }
-  ['huracanesLayerVIIRS','huracanesLayerPos','huracanesLayerCone'].forEach(function(k) {
-    if (window[k]) { try { map.removeLayer(window[k]); } catch(e) {} }
-  });
-  huracanesLayerVIIRS = null; huracanesLayerPos = null; huracanesLayerCone = null;
+  if (huracanesLayerVIIRS) { try { map.removeLayer(huracanesLayerVIIRS); } catch(e) { console.warn('[Huracanes] removeLayer VIIRS fallo', e); } huracanesLayerVIIRS = null; }
+  if (huracanesLayerPos) { try { map.removeLayer(huracanesLayerPos); } catch(e) { console.warn('[Huracanes] removeLayer Pos fallo', e); } huracanesLayerPos = null; }
+  if (huracanesLayerCone) { try { map.removeLayer(huracanesLayerCone); } catch(e) { console.warn('[Huracanes] removeLayer Cone fallo', e); } huracanesLayerCone = null; }
+  try { map.closePopup(); } catch(e) {}
   anpRestaurar();
   huracanesData = null;
   huracanesVisible = false;
+  console.log('[Huracanes] Limpieza completa');
 }
 
 function actualizarVIIRSFecha(dias) {
@@ -11069,7 +11129,6 @@ window.initHuracanes = initHuracanes;
 window.limpiarHuracanes = limpiarHuracanes;
 window.actualizarVIIRSFecha = actualizarVIIRSFecha;
 window.RIESGO_HURACAN = RIESGO;
-
 </script>
   <script>
 let metadataMinimap = null;
