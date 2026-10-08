@@ -7,7 +7,7 @@
    font-size: 0.6rem; font-weight: 600; cursor: pointer;
    display: inline-flex; align-items: center; gap: 0.28rem;
    transition: all var(--t-base) var(--ease-spring);
-   font-family: 'Inter', sans-serif; white-space: nowrap;
+   font-family: 'Noto Sans', sans-serif; white-space: nowrap;
    box-shadow: 0 2px 8px rgba(26,92,78,0.28);
   }
   .btn-download:hover { background: var(--brand-secondary-lt); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,92,78,0.38); }
@@ -31,10 +31,10 @@
    padding:0.22rem 0.45rem; font-size:0.6rem; cursor:pointer;
    display:inline-flex; align-items:center; gap:0.25rem;
    color:var(--text-muted); min-width:26px; min-height:26px;
-   transition:all var(--t-fast) var(--ease); font-family:'Inter',sans-serif;
+   transition:all var(--t-fast) var(--ease); font-family:'Noto Sans',sans-serif;
   }
   .dropdown-download .btn-download:hover { background:var(--bg-glass-hover); color:var(--text-primary); border-color:var(--border-medium); transform:scale(1.05); }
   .dropdown-download .dropdown-menu { display:none; position:absolute; right:0; top:calc(100% + 4px); background:var(--bg-surface); border:1px solid var(--border-medium); border-radius:var(--r-sm); box-shadow:var(--shadow-lg); min-width:125px; padding:0.28rem 0; z-index:300; }
   .dropdown-download .dropdown-menu.show { display:block; }
-  .dropdown-download .dropdown-menu button { display:block; width:100%; padding:0.28rem 0.7rem; border:none; background:transparent; text-align:left; font-family:'Inter',sans-serif; font-size:0.63rem; cursor:pointer; color:var(--text-secondary); transition:all var(--t-fast) var(--ease); }
+  .dropdown-download .dropdown-menu button { display:block; width:100%; padding:0.28rem 0.7rem; border:none; background:transparent; text-align:left; font-family:'Noto Sans',sans-serif; font-size:0.63rem; cursor:pointer; color:var(--text-secondary); transition:all var(--t-fast) var(--ease); }
   .dropdown-download .dropdown-menu button:hover { background:var(--bg-glass-hover); color:var(--text-primary); }

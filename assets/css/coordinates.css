@@ -9,4 +9,4 @@
    pointer-events: none; display: none; box-shadow: var(--shadow-sm);
   }
   #coords-container .coord-label { color:var(--text-muted); margin-right:3px; }
-  #coords-container .coord-value { font-family:'Space Grotesk',monospace; font-weight:600; color:var(--text-primary); }
+  #coords-container .coord-value { font-family:'Montserrat',monospace; font-weight:600; color:var(--text-primary); }

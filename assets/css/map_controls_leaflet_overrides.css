@@ -32,7 +32,7 @@
    border-radius: var(--r-md) !important; box-shadow: var(--shadow-lg) !important;
    color: var(--text-primary) !important; padding: 0.7rem !important; min-width: 175px !important;
   }
-  .leaflet-control-layers-expanded label { font-family:'Inter',sans-serif !important; font-size:0.73rem !important; color:var(--text-secondary) !important; display:flex; align-items:center; gap:6px; padding:0.28rem 0; cursor:pointer; transition:color var(--t-fast) var(--ease); }
+  .leaflet-control-layers-expanded label { font-family:'Noto Sans',sans-serif !important; font-size:0.73rem !important; color:var(--text-secondary) !important; display:flex; align-items:center; gap:6px; padding:0.28rem 0; cursor:pointer; transition:color var(--t-fast) var(--ease); }
   .leaflet-control-layers-expanded label:hover { color: var(--text-primary) !important; }
   .leaflet-control-layers-separator { border-color: var(--border-subtle) !important; }
 
@@ -43,7 +43,7 @@
   .leaflet-draw-edit-edit::before   { content:"\f044" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
   .leaflet-draw-edit-remove::before  { content:"\f2ed" !important; font-family:"Font Awesome 6 Free" !important; font-weight:900 !important; }
 
-  .leaflet-control-scale { font-family:'Inter',sans-serif !important; background:var(--panel-glass) !important; backdrop-filter:blur(8px) !important; border-radius:var(--r-full) !important; padding:3px 11px !important; border:1px solid var(--border-subtle) !important; box-shadow:var(--shadow-sm) !important; font-size:0.63rem !important; color:var(--text-secondary) !important; }
+  .leaflet-control-scale { font-family:'Noto Sans',sans-serif !important; background:var(--panel-glass) !important; backdrop-filter:blur(8px) !important; border-radius:var(--r-full) !important; padding:3px 11px !important; border:1px solid var(--border-subtle) !important; box-shadow:var(--shadow-sm) !important; font-size:0.63rem !important; color:var(--text-secondary) !important; }
   .leaflet-control-scale-line { border-color:var(--brand-secondary) !important; background:transparent !important; }
 
   /* Atribución de teselas adaptada al tema */

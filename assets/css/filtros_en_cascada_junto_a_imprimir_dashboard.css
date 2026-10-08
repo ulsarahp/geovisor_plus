@@ -2,16 +2,16 @@
     Filtros en cascada junto a Imprimir (dashboard)
   ================================================================ */
 #filtros-cascade-wrap { position:relative; display:inline-flex; }
-  #btn-filtros-cascade { background:var(--bg-card); border:1px solid var(--border-medium); border-radius:var(--r-sm); padding:0.38rem 0.7rem; font-size:0.72rem; cursor:pointer; color:var(--text-secondary); display:inline-flex; align-items:center; gap:0.35rem; box-shadow:var(--shadow-sm); font-family:'Inter',sans-serif; }
+  #btn-filtros-cascade { background:var(--bg-card); border:1px solid var(--border-medium); border-radius:var(--r-sm); padding:0.38rem 0.7rem; font-size:0.72rem; cursor:pointer; color:var(--text-secondary); display:inline-flex; align-items:center; gap:0.35rem; box-shadow:var(--shadow-sm); font-family:'Noto Sans',sans-serif; }
   #btn-filtros-cascade:hover { background:var(--bg-card-hover); color:var(--text-primary); }
   #btn-filtros-cascade.active { background:var(--brand-secondary); border-color:var(--brand-secondary); color:#fff; }
   #filtros-cascade-menu { display:none; position:absolute; top:calc(100% + 6px); left:0; z-index:600; background:var(--bg-surface); border:1px solid var(--border-medium); border-radius:var(--r-md); box-shadow:var(--shadow-lg); padding:0.6rem; min-width:240px; max-width:300px; flex-direction:column; gap:0.4rem; }
   #filtros-cascade-menu.show { display:flex; }
   #filtros-cascade-menu label { font-size:0.56rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.3px; }
-  #filtros-cascade-menu select { width:100%; font-size:0.62rem; padding:0.3rem 0.4rem; border-radius:var(--r-sm); border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:'Inter',sans-serif; }
+  #filtros-cascade-menu select { width:100%; font-size:0.62rem; padding:0.3rem 0.4rem; border-radius:var(--r-sm); border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:'Noto Sans',sans-serif; }
   #filtros-cascade-menu select:focus { border-color:var(--brand-secondary); outline:none; }
   .filtros-cascade-btns { display:flex; gap:0.35rem; }
-  .filtros-cascade-btns button { flex:1; font-size:0.6rem; padding:0.3rem 0.5rem; border-radius:var(--r-sm); border:1px solid var(--border-subtle); background:var(--bg-glass); color:var(--text-primary); cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; }
+  .filtros-cascade-btns button { flex:1; font-size:0.6rem; padding:0.3rem 0.5rem; border-radius:var(--r-sm); border:1px solid var(--border-subtle); background:var(--bg-glass); color:var(--text-primary); cursor:pointer; font-family:'Noto Sans',sans-serif; font-weight:600; }
   .filtros-cascade-btns button.primary { background:var(--brand-secondary); border-color:var(--brand-secondary); color:#fff; }
   .filtros-cascade-btns button:hover { filter:brightness(1.1); }
   #filtros-cascade-info { font-size:0.55rem; color:var(--text-muted); }
@@ -23,10 +23,10 @@
   .query-filtro { display:none; margin:0.15rem 0.5rem 0.35rem 1.2rem; padding:0.5rem 0.55rem; background:var(--bg-glass); border:1px solid var(--border-subtle); border-radius:var(--r-sm); flex-direction:column; gap:0.35rem; }
   .query-filtro.open { display:flex; }
   .query-filtro label { font-size:0.54rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.3px; }
-  .query-filtro select { width:100%; font-size:0.6rem; padding:0.28rem 0.35rem; border-radius:var(--r-xs); border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:'Inter',sans-serif; }
+  .query-filtro select { width:100%; font-size:0.6rem; padding:0.28rem 0.35rem; border-radius:var(--r-xs); border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:'Noto Sans',sans-serif; }
   .query-filtro select:focus { border-color:var(--brand-secondary); outline:none; }
   .query-filtro-btns { display:flex; gap:0.3rem; }
-  .query-filtro-btns button { flex:1; font-size:0.58rem; font-weight:700; padding:0.3rem 0.4rem; border-radius:var(--r-xs); cursor:pointer; font-family:'Inter',sans-serif; border:1px solid var(--border-subtle); background:var(--bg-glass); color:var(--text-primary); }
+  .query-filtro-btns button { flex:1; font-size:0.58rem; font-weight:700; padding:0.3rem 0.4rem; border-radius:var(--r-xs); cursor:pointer; font-family:'Noto Sans',sans-serif; border:1px solid var(--border-subtle); background:var(--bg-glass); color:var(--text-primary); }
   .query-filtro-btns button.primary { background:var(--brand-secondary); border-color:var(--brand-secondary); color:#fff; }
   .query-filtro-btns button:hover { filter:brightness(1.1); }
   .query-info { font-size:0.54rem; color:var(--text-muted); line-height:1.35; }

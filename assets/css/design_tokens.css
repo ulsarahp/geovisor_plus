@@ -2,11 +2,11 @@
     DESIGN TOKENS
   ================================================================ */
 :root {
-   --brand-primary:   #6B1132;
-   --brand-primary-dark: #4a0c22;
-   --brand-secondary:  #1a5c4e;
-   --brand-secondary-lt: #237660;
-   --brand-accent:    #6F4489;
+   --brand-primary:   #611232;
+   --brand-primary-dark: #4A0C26;
+   --brand-secondary:  #002F2A;
+   --brand-secondary-lt: #004D40;
+   --brand-accent:    #6708C1;
    --brand-accent-lt:  #8a57a8;
 
    --bg-app:    #0f1117;

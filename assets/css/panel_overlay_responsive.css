@@ -119,12 +119,12 @@
      @media print {
       #header,#panel,#panel-overlay,.leaflet-control-container,#coords-container,#dashboard-container { display:none!important; }
       body,#main { margin:0!important;padding:0!important; background:white!important; }
-      #map-container { width:150mm !important; height:150mm !important; margin:8mm auto 6mm !important; border:2.2px solid #6B1132 !important; border-radius:8px !important; overflow:hidden !important; box-shadow:none !important; }
+      #map-container { width:150mm !important; height:150mm !important; margin:8mm auto 6mm !important; border:2.2px solid #611232 !important; border-radius:8px !important; overflow:hidden !important; box-shadow:none !important; }
       #map { width:100%!important;height:100%!important; }
       div[leaflet-browser-print-content] { display:flex !important; flex-direction:column !important; }
       /* Orden análisis: encabezado → mapa → datos → disclaimer */
       #print-report { display:contents !important; }
-      #print-report > div:first-child { order:1 !important; background:#6B1132 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+      #print-report > div:first-child { order:1 !important; background:#611232 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
       #print-meta { order:2 !important; display:block !important; }
       div[leaflet-browser-print-content] .leaflet-browser-print-map { order:3 !important; margin:6mm auto !important; }
       #print-report > div:last-child { order:4 !important; }
@@ -153,5 +153,5 @@
   }
   .leaflet-control-browser-print a:hover {
    background-color: var(--bg-glass-hover) !important;
-   color: #6B1132 !important;
+   color: #611232 !important;
   }

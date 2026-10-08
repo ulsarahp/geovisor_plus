@@ -46,7 +46,7 @@
 
   .header-title { display: flex; flex-direction: column; }
   .header-title-main {
-   font-family: 'Space Grotesk', sans-serif;
+   font-family: 'Montserrat', sans-serif;
    font-weight: 700; font-size: 0.93rem;
    color: #fff; letter-spacing: -0.2px; line-height: 1.2;
   }
@@ -81,7 +81,7 @@
    border-radius: var(--r-sm);
    color: rgba(255,255,255,0.55);
    padding: 0.28rem 0.85rem;
-   font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.7rem;
+   font-family: 'Noto Sans', sans-serif; font-weight: 600; font-size: 0.7rem;
    cursor: pointer; white-space: nowrap;
    transition: all var(--t-base) var(--ease);
   }

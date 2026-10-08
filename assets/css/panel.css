@@ -19,7 +19,7 @@
    border-bottom: 1px solid var(--border-subtle);
   }
   .panel-header-row h2 {
-   font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 700;
+   font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 700;
    color: var(--text-primary); display: flex; align-items: center; gap: 0.45rem;
   }
   .panel-header-row h2 i { color: var(--brand-secondary); font-size: 0.8rem; }
@@ -63,7 +63,7 @@
   }
   .stat-pill:hover { background: var(--bg-glass-hover); border-color: var(--border-medium); }
   .stat-pill-label { font-size: 0.56rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
-  .stat-pill-value { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1; }
+  .stat-pill-value { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1; }
   .stat-anp .stat-pill-value { color: var(--acc-anp); }
   .stat-advc .stat-pill-value { color: var(--acc-advc); }
 
@@ -72,7 +72,7 @@
   #buscador input {
    flex:1; background: var(--bg-glass); border: 1px solid var(--border-medium);
    border-radius: var(--r-full); color: var(--text-primary);
-   font-family: 'Inter', sans-serif; font-size: 0.76rem; padding: 0.42rem 0.95rem;
+   font-family: 'Noto Sans', sans-serif; font-size: 0.76rem; padding: 0.42rem 0.95rem;
    min-height: 34px; outline: none; transition: all var(--t-base) var(--ease);
   }
   #buscador input::placeholder { color: var(--text-muted); }
@@ -95,7 +95,7 @@
    background: var(--bg-glass);
    border: 1px solid var(--border-subtle);
    border-radius: var(--r-sm); color: var(--text-secondary);
-   font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600;
+   font-family: 'Noto Sans', sans-serif; font-size: 0.7rem; font-weight: 600;
    padding: 0.48rem 1rem; cursor: pointer;
    display: flex; align-items: center; justify-content: center; gap: 0.45rem;
    transition: all var(--t-base) var(--ease); min-height: 34px;
@@ -167,7 +167,7 @@
   .btn-descarga:hover { color: var(--brand-secondary-lt); }
   .btn-descarga .dropdown-menu { display:none; position:absolute; right:0; top:100%; background:var(--bg-surface); border:1px solid var(--border-medium); border-radius:var(--r-sm); box-shadow:var(--shadow-lg); min-width:115px; padding:0.3rem 0; z-index:300; }
   .btn-descarga .dropdown-menu.show { display:block; }
-  .btn-descarga .dropdown-menu button { display:block; width:100%; padding:0.28rem 0.7rem; border:none; background:transparent; text-align:left; font-family:'Inter',sans-serif; font-size:0.65rem; cursor:pointer; color:var(--text-secondary); transition:background var(--t-fast) var(--ease); }
+  .btn-descarga .dropdown-menu button { display:block; width:100%; padding:0.28rem 0.7rem; border:none; background:transparent; text-align:left; font-family:'Noto Sans',sans-serif; font-size:0.65rem; cursor:pointer; color:var(--text-secondary); transition:background var(--t-fast) var(--ease); }
   .btn-descarga .dropdown-menu button:hover { background:var(--bg-glass-hover); color:var(--text-primary); }
 
   .capa-controls { display:flex; align-items:center; gap:0.45rem; padding:0.22rem 0.5rem 0.28rem 1.75rem; }
@@ -220,7 +220,7 @@
    padding:0.22rem 0.45rem; font-size:0.6rem; cursor:pointer;
    display:inline-flex; align-items:center; gap:0.25rem;
    color:var(--text-muted); flex-shrink:0; min-width:26px; min-height:26px;
-   transition:all var(--t-fast) var(--ease); font-family:'Inter',sans-serif; white-space:nowrap;
+   transition:all var(--t-fast) var(--ease); font-family:'Noto Sans',sans-serif; white-space:nowrap;
   }
   .widget-header .btn-group .widget-btn:hover,
   .widget-header .btn-group .btn-expandir:hover,

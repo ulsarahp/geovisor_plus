@@ -31,9 +31,9 @@
   .kpi-1 .kpi-accent { background:linear-gradient(90deg,var(--brand-secondary),var(--brand-secondary-lt)); }
   .kpi-2 .kpi-accent { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
   .kpi-3 .kpi-accent { background:linear-gradient(90deg,var(--brand-accent),var(--brand-accent-lt)); }
-  .kpi-4 .kpi-accent { background:linear-gradient(90deg,#6F4489,#8a5fc0); }
-   .kpi-5 .kpi-accent { background:linear-gradient(90deg,#1a5c4e,#2d9a87); }
-   .kpi-6 .kpi-accent { background:linear-gradient(90deg,#8a1a3a,#c0395a); }
+  .kpi-4 .kpi-accent { background:linear-gradient(90deg,#6708C1,#8a5fc0); }
+   .kpi-5 .kpi-accent { background:linear-gradient(90deg,#002F2A,#2d9a87); }
+   .kpi-6 .kpi-accent { background:linear-gradient(90deg,#9B2247,#A84565); }
    /* KPI filtros compacto (punto 4): barra y chips más pequeños con scroll */
    #dashboard-filter-bar { padding:0.3rem 0.5rem !important; font-size:0.58rem !important; gap:0.35rem !important; max-height:72px !important; overflow-y:auto !important; }
    #dashboard-filter-bar .filter-chip, #dashboard-filter-bar span[style*="border-radius:999px"] { padding:0.12rem 0.35rem !important; font-size:0.52rem !important; }
@@ -48,7 +48,7 @@
    }
    /* V4: tarjeta Filtros activos eliminada — filtros en cascada junto a Imprimir */
 
-     .kpi-value { font-family:'Space Grotesk',sans-serif; font-size:clamp(1rem, 11cqw, 2.4rem); font-weight:800; line-height:1.1; margin-top:0.22rem; background:var(--kpi-text-grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; transition:opacity 0.4s ease,transform 0.4s ease; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+     .kpi-value { font-family:'Montserrat',sans-serif; font-size:clamp(1rem, 11cqw, 2.4rem); font-weight:800; line-height:1.1; margin-top:0.22rem; background:var(--kpi-text-grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; transition:opacity 0.4s ease,transform 0.4s ease; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
      .kpi-5 .kpi-value, .kpi-6 .kpi-value { white-space:normal; font-size:clamp(0.85rem, 8cqw, 1.6rem); overflow:visible; text-overflow:clip; }
      .kpi-sub { font-size:clamp(0.5rem, 4.5cqw, 0.66rem); color:var(--text-muted); margin-top:0.18rem; line-height:1.35; overflow-wrap:anywhere; }
 
@@ -81,7 +81,7 @@
   .tabla-container .sin-datos { text-align:center; color:var(--text-muted); padding:1.5rem 0; font-style:italic; }
 
   .tabla-tabs { display:flex; gap:0.28rem; margin-bottom:0.45rem; }
-  .tabla-tabs button { padding:0.18rem 0.75rem; border:1px solid var(--border-subtle); border-radius:var(--r-full); background:transparent; font-size:0.6rem; font-weight:600; cursor:pointer; transition:all var(--t-fast) var(--ease); color:var(--text-muted); font-family:'Inter',sans-serif; }
+  .tabla-tabs button { padding:0.18rem 0.75rem; border:1px solid var(--border-subtle); border-radius:var(--r-full); background:transparent; font-size:0.6rem; font-weight:600; cursor:pointer; transition:all var(--t-fast) var(--ease); color:var(--text-muted); font-family:'Noto Sans',sans-serif; }
   .tabla-tabs button:hover { border-color:var(--border-medium); color:var(--text-primary); }
   .tabla-tabs button.active { background:var(--brand-secondary); color:#fff; border-color:var(--brand-secondary); }
 

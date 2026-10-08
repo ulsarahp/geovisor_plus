@@ -1,0 +1,393 @@
+/* ================================================================
+   SISTEMA NACIONAL DE DISEÑO (SND) — Gobierno de México
+   https://www.snd.gob.mx/
+   ----------------------------------------------------------------
+   Hoja de identidad SND aplicada al Geovisor CONANP.
+   Se carga al final: remapea los tokens del geovisor a los
+   valores oficiales del SND (paleta, tipografía, radios,
+   sombras, botones, píldoras, tablas y estados de foco).
+
+   Gama institucional: GUINDA (CONANP / GobMX)
+   Fuente base: Noto Sans · Encabezados: Montserrat · Código: Source Code Pro
+   ================================================================ */
+
+:root {
+   /* ── PALETAS OFICIALES SND ── */
+   --pguinda100:#F3E4E9; --pguinda200:#E1BDC9; --pguinda300:#CE92A6;
+   --pguinda400:#BA6783; --pguinda500:#A84565; --pguinda600:#9B2247;
+   --pguinda700:#8E1D3F; --pguinda800:#781838; --pguinda900:#611232;
+   --pguinda950:#4A0C26;
+
+   --pverde100:#E0E9E8; --pverde200:#B3C8C6; --pverde300:#82A4A0;
+   --pverde400:#51807A; --pverde500:#335955; --pverde600:#004D40;
+   --pverde700:#004339; --pverde800:#003931; --pverde900:#002F2A;
+   --pverde950:#001D1A;
+
+   --dorado100:#F6F2EA; --dorado200:#E4D9C0; --dorado300:#DBCCAB;
+   --dorado400:#C9B280; --dorado500:#B79956; --dorado600:#A57F2C;
+   --dorado700:#846623; --dorado800:#634C1A; --dorado900:#423312;
+   --dorado950:#32260D;
+
+   --neutro100:#FFFFFF; --neutro200:#F9F9F9; --neutro300:#F3F3F3;
+   --neutro400:#DDDDDD; --neutro500:#AAAAAA; --neutro600:#767676;
+   --neutro700:#434343; --neutro800:#161A1D;
+   --neutro800-56:#161A1D8F; --neutro800-80:#161A1DCC;
+
+   /* Semánticos SND: 500 = fuerte / 100 = fondo */
+   --snd-rojo500:#9B0F15;   --snd-rojo100:#FAE5E5;
+   --snd-verde500:#086308;  --snd-verde100:#F0FAF5;
+   --snd-azul500:#224497;   --snd-azul100:#EDF2FE;
+   --snd-amarillo500:#684700; --snd-amarillo100:#FFEB99;
+   --snd-morado500:#6708C1; --snd-morado100:#ECE2F5;
+   --snd-naranja500:#6E3700; --snd-naranja100:#F9D9A9;
+
+   /* Estados nativos SND */
+   --nativoAzul:#611232;      --nativoAzulHover:#4C0E27;  --nativoAzulActive:#844C62;
+   --nativoGris:#767676;      --nativoGrisHover:#4F4F4F;  --nativoGrisActive:#8D8D8D;
+   --nativoAzulLite:#B8A3AC;  --nativoGrisLite:#C0C0C0;
+
+   /* Gama activa: GUINDA institucional */
+   --gama100:var(--pguinda100); --gama200:var(--pguinda200);
+   --gama500:var(--pguinda500); --gama600:var(--pguinda600);
+   --gama950:var(--pguinda950);
+   --principal:var(--pguinda900);
+   --snd-degradado:linear-gradient(to right,var(--pguinda900),var(--pguinda600));
+
+   /* Sombras oficiales SND */
+   --dropLV1:0 2px 4px rgba(0,0,0,.15);
+   --dropLV1--invert:0 -2px 4px rgba(0,0,0,.15);
+   --dropLV2:0 4px 8px rgba(0,0,0,.15);
+   --dropLV2--invert:0 -4px 8px rgba(0,0,0,.15);
+
+   /* ── REMAPEO DE TOKENS DEL GEOVISOR (tema oscuro por defecto) ── */
+   --brand-primary:     var(--pguinda900);      /* #611232 */
+   --brand-primary-dark: var(--pguinda950);     /* #4A0C26 */
+   --brand-secondary:   var(--pverde600);      /* #004D40 */
+   --brand-secondary-lt: var(--pverde700);     /* #004339 */
+   --brand-accent:      var(--snd-morado500);  /* #6708C1 */
+   --brand-accent-lt:   #8A47D4;
+
+   --bg-app:     #101316;                       /* base neutro800 oscurecida */
+   --bg-surface: var(--neutro800);              /* #161A1D */
+   --bg-panel:   rgba(13,16,19,0.97);
+   --bg-card:    rgba(22,26,29,0.94);
+   --bg-card-hover: rgba(30,35,40,0.96);
+   --bg-glass:   rgba(255,255,255,0.045);
+   --bg-glass-hover:rgba(255,255,255,0.08);
+
+   --text-primary:  var(--neutro100);           /* #FFFFFF */
+   --text-secondary: #C3C6C9;
+   --text-muted:   var(--neutro500);            /* #AAAAAA */
+
+   --border-subtle: rgba(255,255,255,0.07);
+   --border-medium: rgba(255,255,255,0.12);
+   --border-strong: rgba(255,255,255,0.18);
+
+   --shadow-sm: 0 2px 4px rgba(0,0,0,0.45);
+   --shadow-md: 0 4px 8px rgba(0,0,0,0.50);
+   --shadow-lg: 0 8px 24px rgba(0,0,0,0.55);
+   --shadow-xl: 0 16px 48px rgba(0,0,0,0.62);
+
+   /* Radios oficiales SND: botón 8 · card 16 · input 4 · tabla 8 · píldora pill */
+   --r-xs: 4px;  --r-sm: 8px;  --r-md: 12px;
+   --r-lg: 16px; --r-xl: 16px; --r-full: 50rem;
+
+   /* Transición estándar SND */
+   --t-fast: 0.15s;
+   --snd-transition: color .15s ease-in-out, background-color .15s ease-in-out,
+                     border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+   /* Semántica de estado (tonos SND aclarados para tema oscuro) */
+   --ok: #55B77E;   --ok-bg: rgba(8,99,8,0.14);  --ok-bd: rgba(85,183,126,0.25);
+   --warn:#E8C558;  --warn-bg:rgba(232,197,88,0.10); --warn-bd:rgba(232,197,88,0.22);
+   --err: #E46A6E;  --err-bg: rgba(155,15,21,0.16); --err-bd: rgba(228,106,110,0.28);
+   --acc-anp: #55B77E;
+   --acc-advc:#B08BE8;
+}
+
+/* ================================================================
+   TEMA CLARO — valores SND exactos
+   ================================================================ */
+html[data-theme="light"] {
+   --bg-app:     var(--neutro200);              /* #F9F9F9 */
+   --bg-surface: var(--neutro100);              /* #FFFFFF */
+   --bg-panel:   rgba(255,255,255,0.97);
+   --bg-card:    rgba(255,255,255,0.97);
+   --bg-card-hover: rgba(249,249,249,0.98);
+   --bg-glass:   rgba(22,26,29,0.045);
+   --bg-glass-hover:rgba(22,26,29,0.085);
+
+   --text-primary:  var(--neutro800);           /* #161A1D */
+   --text-secondary: var(--neutro700);          /* #434343 */
+   --text-muted:   var(--neutro600);            /* #767676 */
+
+   --border-subtle: rgba(22,26,29,0.09);
+   --border-medium: rgba(22,26,29,0.15);
+   --border-strong: rgba(22,26,29,0.24);
+
+   --shadow-sm: var(--dropLV1);
+   --shadow-md: var(--dropLV2);
+   --shadow-lg: 0 4px 8px rgba(0,0,0,0.15);
+   --shadow-xl: 0 8px 16px rgba(0,0,0,0.18);
+
+   /* Semánticos SND exactos en claro */
+   --ok: var(--snd-verde500);    --ok-bg: var(--snd-verde100);   --ok-bd: rgba(8,99,8,0.28);
+   --warn:var(--snd-amarillo500);--warn-bg:var(--snd-amarillo100);--warn-bd:rgba(104,71,0,0.28);
+   --err: var(--snd-rojo500);    --err-bg: var(--snd-rojo100);   --err-bd: rgba(155,15,21,0.28);
+   --acc-anp: var(--snd-verde500);
+   --acc-advc:var(--snd-morado500);
+}
+
+/* ================================================================
+   TIPOGRAFÍA SND
+   Noto Sans = base · Montserrat = encabezados · Source Code Pro = código
+   ================================================================ */
+body, body * {
+   font-family: 'Noto Sans', system-ui, sans-serif;
+}
+h1, h2, h3, h4, h5, h6,
+.brand-name, .stat-pill-value, .kpi-value,
+.panel-title, .tab-btn, .section-title,
+.modal-title, .popup-title, .leyenda-title {
+   font-family: 'Montserrat', sans-serif;
+}
+code, pre, .mono, .coords, .stat-num {
+   font-family: 'Source Code Pro', 'Courier New', monospace;
+}
+h1, h2, h3, h4 { font-weight: 600; letter-spacing: 0; }
+h5, h6 { font-weight: 600; }
+
+/* Escala tipográfica SND (roles) */
+.h0r { font-size:3.5rem;   line-height:3.75rem;   font-weight:700; }
+.h1r { font-size:2.5rem;   line-height:3.375rem;  font-weight:700; }
+.h2r { font-size:2rem;     line-height:2.75rem;   font-weight:600; }
+.sh0r{ font-size:1.5rem;   line-height:2.0625rem; font-weight:600; }
+.sh1r{ font-size:1.25rem;  line-height:1.6875rem; font-weight:600; }
+.b1  { font-size:1rem;     line-height:1.375rem; }
+.sd  { font-size:.875rem;  line-height:1.1875rem; }
+.xsd { font-size:.75rem;   line-height:1rem; }
+
+/* ================================================================
+   ENLACES SND
+   ================================================================ */
+a, a:focus { color: var(--pverde600); font-weight: 600; }
+a:hover    { color: #33836F; }
+a:active, a:visited { color: #33685B; }
+
+/* ================================================================
+   FOCO VISIBLE — accesibilidad SND
+   ================================================================ */
+:focus-visible {
+   outline: solid 2px var(--pverde500);
+   outline-offset: 1px;
+   border-radius: 4px;
+}
+
+/* ================================================================
+   BOTONES SND
+   base: radio 8px · peso 600 · transición .15s ease-in-out
+   ================================================================ */
+.btn, button[class*="btn"],
+.tab-btn, .btn-descarga, .dropdown-download button {
+   border-radius: 8px;
+   font-weight: 600;
+   transition: var(--snd-transition);
+}
+
+/* Primario SND */
+.btn-primary, .btn-login, .btn-cta {
+   background: var(--pguinda900);
+   border: 1px solid var(--pguinda900);
+   color: #fff;
+   min-height: 48px;
+}
+.btn-primary:hover, .btn-login:hover {
+   background: var(--pguinda600);
+   border-color: var(--pguinda600);
+   color: #fff;
+}
+.btn-primary:active {
+   background: var(--pguinda100);
+   color: var(--neutro800);
+}
+.btn-primary:disabled {
+   background: var(--neutro400);
+   border-color: var(--neutro400);
+   color: var(--neutro500);
+   cursor: not-allowed;
+}
+
+/* Secundario SND */
+.btn-secondary, .btn-outline {
+   background: #fff;
+   border: 1px solid var(--pguinda900);
+   color: var(--pguinda900);
+   border-radius: 8px;
+}
+.btn-secondary:hover, .btn-outline:hover {
+   background: var(--pguinda100);
+   color: var(--pguinda900);
+}
+html[data-theme="light"] .btn-secondary:hover { background: var(--pguinda100); }
+
+/* Fantasma SND */
+.btn-ghost {
+   background: transparent;
+   color: var(--text-primary);
+   border: 1px solid transparent;
+   border-radius: 8px;
+}
+.btn-ghost:hover {
+   background: var(--bg-glass-hover);
+}
+
+/* ================================================================
+   TARJETAS / CAJAS SND
+   radio 16px · borde 1px neutro400 · sombra dropLV1
+   ================================================================ */
+.card, .modal-content, .dashboard-card, .panel-card,
+.metadata-modal, .popup-content {
+   border-radius: 16px;
+}
+html[data-theme="light"] .card,
+html[data-theme="light"] .modal-content,
+html[data-theme="light"] .dashboard-card {
+   border: 1px solid var(--neutro400);
+   box-shadow: var(--dropLV1);
+}
+
+/* ================================================================
+   PÍLDORAS / BADGES SND (radio pill · peso 400 · borde semántico)
+   ================================================================ */
+.badge, .chip, .pill, .stat-pill,
+.pildora, [class*="badge-"], [class*="pill-"] {
+   border-radius: 50rem;
+   font-size: .875rem;
+   padding: 4px 10px;
+   white-space: nowrap;
+   display: inline-block;
+   width: fit-content;
+}
+.badge-ok,  .pildora--exito  { background: var(--snd-verde100);   color: var(--snd-verde500);   border:1px solid var(--snd-verde500); }
+.badge-err, .pildora--error  { background: var(--snd-rojo100);   color: var(--snd-rojo500);    border:1px solid var(--snd-rojo500); }
+.badge-info,.pildora--info   { background: var(--snd-azul100);   color: var(--snd-azul500);    border:1px solid var(--snd-azul500); }
+.badge-warn,.pildora--alerta { background: var(--snd-amarillo100);color: var(--snd-amarillo500);border:1px solid var(--snd-amarillo500); }
+.pildora__dot { width:12px; height:12px; border-radius:5rem; display:inline-block; }
+
+/* ================================================================
+   TABLAS SND
+   thead fondo gama600 · texto blanco · peso 600 · radio 8px
+   ================================================================ */
+table thead th, .tabla01__theadTh {
+   background: var(--pguinda600);
+   color: #fff;
+   font-size: .875rem;
+   font-weight: 600;
+   padding: .875rem .5rem;
+   vertical-align: middle;
+}
+table { border-collapse: separate; border-spacing: 0; border-radius: 8px; }
+html[data-theme="light"] tbody tr:nth-child(2n) td { background: var(--neutro200); }
+
+/* ================================================================
+   FORMULARIOS SND
+   input radio 4px · borde neutro400 · foco verde 3px
+   ================================================================ */
+input, select, textarea, .form__control, .form__inset {
+   border-radius: 4px;
+   border: 1px solid var(--neutro400);
+   background-color: var(--bg-surface);
+   color: var(--text-primary);
+   padding: 6px 12px;
+   line-height: 1.5;
+}
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+   background-color: #fff;
+   color: var(--neutro800);
+}
+input:focus, select:focus, textarea:focus,
+.form__control:focus, .form__select:focus {
+   outline: solid 3px var(--snd-azul100);
+   border-color: var(--snd-azul500);
+}
+
+/* ================================================================
+   HEADER — gradiente institucional SND (guinda900 → guinda600)
+   ================================================================ */
+.app-header, #app-header, header.main-header {
+   background: linear-gradient(to right, var(--pguinda900), var(--pguinda600)) !important;
+   color: #fff;
+}
+
+/* ================================================================
+   SCROLLBAR SND
+   ================================================================ */
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--nativoGris); border-radius: 50rem; }
+*::-webkit-scrollbar-thumb:hover { background: var(--nativoGrisHover); }
+
+/* ================================================================
+   MODAL / DIÁLOGO SND
+   radio 1rem · sombra oficial
+   ================================================================ */
+.modal-overlay, .dialog {
+   background: var(--neutro800-56);
+}
+.modal-box, .modal-content, dialog {
+   border-radius: 1rem;
+   box-shadow: 0 .25rem .25rem .1rem rgba(0,0,0,0.3);
+}
+
+/* ================================================================
+   LOGIN — identidad SND
+   ================================================================ */
+.login-modal, .login-box, .login-card {
+   border-radius: 16px;
+}
+html[data-theme="light"] .login-modal,
+html[data-theme="light"] .login-box,
+html[data-theme="light"] .login-card {
+   border: 1px solid var(--neutro400);
+   box-shadow: var(--dropLV2);
+}
+.login-input {
+   border-radius: 4px !important;
+   border: 1px solid var(--neutro400) !important;
+   background: #fff !important;
+   color: var(--neutro800) !important;
+}
+.login-input:focus {
+   outline: solid 3px var(--snd-azul100) !important;
+   border-color: var(--snd-azul500) !important;
+}
+.btn-entrar, .login-submit {
+   background: var(--pguinda900) !important;
+   border: 1px solid var(--pguinda900) !important;
+   border-radius: 8px !important;
+   font-weight: 600 !important;
+   min-height: 48px;
+}
+.btn-entrar:hover, .login-submit:hover {
+   background: var(--pguinda600) !important;
+   border-color: var(--pguinda600) !important;
+}
+
+/* ================================================================
+   SECCIONES ESTRATÉGICAS — acentos SND
+   ================================================================ */
+.seccion-panel {
+   border-radius: 16px;
+}
+.seccion-panel .seccion-icono {
+   border-radius: 8px;
+}
+.seccion-panel .seccion-header {
+   border-bottom: 1px solid var(--border-subtle);
+}
+
+/* KPIs con dorado SND de acento opcional */
+.kpi-acento-dorado { color: var(--dorado600); }
+.degradado-snd { background: var(--snd-degradado); }
