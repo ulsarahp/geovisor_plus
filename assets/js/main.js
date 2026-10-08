@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 // ================================================================
 // MAIN — punto de entrada único del proyecto Geovisor CONANP
 // index.html solo programa la vista; toda la lógica vive en assets/js.
@@ -46,3 +48,5 @@ try{
 
 window.APP_INFO = APP_INFO;
 window.environmentReport = environmentReport;
+
+})();
