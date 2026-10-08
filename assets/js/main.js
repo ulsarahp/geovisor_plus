@@ -8,7 +8,6 @@
 // constantes dentro de funciones) ya encuentran window.* listo.
 // Migración total a módulos: ver docs/FUNCIONAMIENTO.md.
 // ================================================================
-import './config.js';
 
 const GEOSERVER_BASE = window.GEOSERVER_BASE;
 const WORKSPACE = window.WORKSPACE;
@@ -44,5 +43,6 @@ try{
   });
 }catch(e){}
 
-export { APP_INFO, environmentReport };
-export default APP_INFO;
+
+window.APP_INFO = APP_INFO;
+window.environmentReport = environmentReport;
